@@ -1,0 +1,26 @@
+{
+  "name": "vrt_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toruotsubo/vrt_test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/toruotsubo/vrt_test/issues"
+  },
+  "homepage": "https://github.com/toruotsubo/vrt_test#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1"
+  },
+  "dependencies": {
+    "pixelmatch": "^7.2.0"
+  }
+}
