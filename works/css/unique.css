@@ -1,0 +1,159 @@
+@charset "utf-8";
+
+/*******************************
+  個別設定
+*******************************/
+
+#main .pageHeader .image {
+	background-image: url(../imgs/img-main.jpg);
+}
+
+#main .menu {
+	margin: 80px 0 0;
+}
+
+#main .menu .wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#main .menu .panel {
+	display: flex;
+	flex-direction: column;
+	width: 31.2%;
+	margin: 0 3.2% 70px 0;
+	position: relative;
+}
+
+#main .menu .panel:nth-child(3n+3) {
+	margin-right: 0;
+}
+
+#main .menu .panel .image img {
+	width: 100%;
+}
+
+#main .menu .panel .name {
+	min-height: 48px;
+	margin: 15px 0 0;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+body.translated #main .menu .panel .name br {
+	display: none;
+}
+
+#main .menu .panel .text {
+	margin: 20px 0 24px;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+#main .menu .panel .category {
+	display: flex;
+	flex-wrap: wrap;
+	margin: auto 0 0;
+	padding-bottom: 37px;
+}
+
+#main .menu .panel .category:has(li:nth-child(4)) {
+	padding-bottom: 0;
+}
+
+#main .menu .panel .category li {
+	display: inline-block;
+	width: calc((100% - 2px) / 3);
+	margin: 0 0 0 1px;
+	padding: 9px 0;
+	font-size: 12px;
+	line-height: 18px;
+	text-align: center;
+}
+
+#main .menu .panel .category li:nth-child(3n+1) {
+	margin-left: 0;
+}
+
+#main .menu .panel .category li:nth-child(n+4) {
+	margin-top: 1px;
+}
+
+#main .menu .panel .category .cat01 {
+	background: #d4eaf5;
+}
+
+#main .menu .panel .category .cat02 {
+	background: #f5d4e0;
+}
+
+#main .menu .panel .category .cat03 {
+	background: #f5efd4;
+}
+
+#main .menu .panel .category .cat04 {
+	background: #d4f5ea;
+}
+
+#main .menu .panel .category .cat05 {
+	background: #f5dad4;
+}
+
+#main .menu .panel .category .cat06 {
+	background: #d4d4f5;
+}
+
+#main .menu .panel .category .cat07 {
+	background: #e5f2df;
+}
+
+#main .link {
+	margin-top: 0;
+}
+
+@media only screen and (max-width:750px) {
+	#main .menu {
+		margin: calc(100vw * 80 / 750) 0 0;
+	}
+
+	#main .menu .wrap {
+		display: block;
+	}
+
+	#main .menu .panel {
+		display: block;
+	}
+
+	#main .menu .panel,
+	#main .menu .panel:nth-child(3n+3) {
+		width: auto;
+		max-width: 312px;
+		margin: 0 auto calc(100vw * 70 / 750);
+		padding: 0;
+		position: relative;
+	}
+
+	#main .menu .panel .name {
+		height: auto;
+		min-height: 0;
+		margin: calc(100vw * 15 / 750) 0 0;
+		font-size: calc(100vw * 32 / 750);
+		line-height: 1.5;
+	}
+
+	#main .menu .panel .text {
+		margin: calc(100vw * 20 / 750) 0 0;
+		font-size: calc(100vw * 28 / 750);
+		line-height: 1.5;
+	}
+
+	#main .menu .panel .category {
+		margin: 24px 0 0;
+		padding-bottom: 0;
+		position: static;
+	}
+
+	#main .link {
+		margin-top: 0;
+	}
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<?php include("inc/contact_header.inc"); ?>
+
+		<main id="main">
+			<article>
+				<header class="pageHeader">
+					<div class="image"></div>
+					<h2 class="title"><span><strong>お問い合わせ</strong><span>Contact</span></span></h2>
+					<ul class="breadCrumb">
+						<li><a href="../index.html">HOME</a></li>
+						<li>お問い合わせ-Contact</li>
+						<li>入力エラー</li>
+					</ul>
+				</header>
+
+				<div id="form">
+					<div class="wrap">
+						<form action="form.php" method="post">
+							<div class="headline">
+								<p class="lead">以下の記入事項をご確認いただき、<br />「戻る」ボタンで前画面に戻って修正してください。</p>
+								<div id="globalsign">
+									<div class="inner">
+<div id="ss_gmo_globalsign_secured_site_seal" oncontextmenu="return false;" style="width:100px; height:50px">
+<img id="ss_gmo_globalsign_img" src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7" alt="" onclick="ss_open_profile()" style="cursor:pointer; border:0; width:100%" >
+</div>
+<script>
+window.addEventListener('load', () => {
+let s = document.createElement("script");
+s.src = "https://seal.atlas.globalsign.com/gss/one/seal?image=seal_100-50_en.png";
+document.body.appendChild(s);
+});
+</script>
+										<strong>※個人情報保護のため、情報は暗号化されて送信されます。</strong>
+									</div>
+									<div class="text">このWebサイトからの情報の送信には、暗号化通信（ssl）を採用しています。ご記入いただいた情報は暗号化されて送信され、安全な通信環境を提供しています。</div>
+								</div>
+							</div>
+							<table>
+<!-- RoopFormat Start -->
+								<tr>
+									<th>%name%</th>
+									<td>%value%</td>
+								</tr>
+<!-- RoopFormat End -->
+							</table>
+							<div class="btn">
+								<div class="inner back"><input type="submit" name="" value="戻る" onClick="javascript:history.back()"></div>
+								<!-- form.php set start -->
+								<input type="hidden" name="mode" value="%mode%">
+								<input type="hidden" name="formname" value="%formname%">
+								<input type="hidden" name="msgid" value="%msgid%">
+								<!-- form.php set end -->
+							</div>
+						</form>
+					</div>
+				</div>
+			</article>
+		</main><!-- /mainContents -->
+
+<?php include("inc/contact_footer.inc"); ?>
+</body>
+
+</html>

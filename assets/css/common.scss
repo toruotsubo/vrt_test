@@ -1,0 +1,2678 @@
+//
+@charset "utf-8";
+
+// 変数定義
+// #############################################################################################
+
+@import 'settings';
+
+// CSSリセット
+// #############################################################################################
+
+* {
+	-webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+table,
+tr,
+th,
+td,
+form,
+figure {
+	font-size: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+table {
+	border-collapse: collapse;
+	empty-cells: show;
+}
+
+th,
+td {
+	text-align: left;
+	vertical-align: top;
+}
+
+li {
+	list-style: none;
+}
+
+img {
+	vertical-align: top;
+}
+
+input,
+textarea,
+select {
+	font-family: inherit;
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+select::-ms-expand {
+	display: none;
+}
+
+[disabled] {
+	cursor: not-allowed;
+}
+
+input,
+button {
+
+	&[type=submit],
+	&[type=reset] {
+		&:not([disabled]) {
+			cursor: pointer;
+		}
+	}
+}
+
+// 共通設定
+// #############################################################################################
+
+html,
+:root {
+	font-size: 100px;
+
+	@include pc {}
+
+	@include pcNarrow {
+		//font-size: (100vw * 100 / $pcWidth);
+	}
+
+	@include sp {
+		font-size: (100vw * 100 / $spWidth);
+	}
+}
+
+body {
+	color: $colorP;
+
+	@if $baseFontFamily==serif {
+		font-family: $serif;
+
+		@if $msFonts==true {
+			@include ie {
+				font-family: $msSerif;
+			}
+		}
+	}
+
+	@else {
+		font-family: $sansSerif;
+
+		@if $msFonts==true {
+			@include ie {
+				font-family: $msSansSerif;
+			}
+		}
+	}
+
+	font-size: .16rem;
+	letter-spacing: .075em;
+	line-height: (30 / 16);
+
+	@include sp {
+		font-size: .3rem;
+		letter-spacing: .025em;
+		line-height: (48 / 30);
+	}
+}
+
+#wrap {
+	overflow: hidden;
+}
+
+%lato {
+	font-family: 'Lato', sans-serif;
+	font-weight: 700;
+}
+
+// レスポンシブ対応
+// ==========================================================================
+
+.wrap {
+	max-width: 1200px;
+
+	margin: {
+		right: auto;
+		left: auto;
+	}
+
+	@include sp {
+		padding: {
+			right: $spPading;
+			left: $spPading;
+		}
+	}
+}
+
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+img {
+
+	&[src$="_sp.jpg"],
+	&[src$="_sp.png"],
+	&[src$="_sp.svg"] {
+		display: none;
+
+		@include sp {
+			display: inline-block;
+
+			&+img {
+				display: none;
+			}
+		}
+	}
+}
+
+.sp {
+	display: none;
+}
+
+@include sp {
+	.pc {
+		display: none;
+	}
+
+	br.sp {
+		display: inline;
+	}
+}
+
+a[href^="tel:"] {
+	html:not(.mobile) & {
+		pointer-events: none;
+	}
+}
+
+// アニメーション
+// ==========================================================================
+
+.hov {
+	html:not(.mobile) & {
+		transition: opacity .3s;
+
+		@supports (filter: brightness(100%)) {
+			transition-property: filter;
+		}
+
+		&:hover {
+			opacity: .8;
+
+			@supports (filter: brightness(100%)) {
+				filter: brightness(110%);
+				opacity: 1;
+			}
+		}
+	}
+}
+
+// header
+// #############################################################################################
+
+.gHeader {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	background: #fff;
+
+	// branding
+	// ==========================================================================
+
+	.branding {
+		.inner {
+			height: .8rem;
+			position: relative;
+
+			@include sp {
+				height: 1rem;
+			}
+		}
+
+		.siteTitle {
+			width: 2.65rem;
+			position: absolute;
+			top: .39rem;
+			left: 0;
+
+			@include sp {
+				width: 2.92rem;
+				top: .58rem;
+				left: -.1rem;
+			}
+		}
+
+		.logo {
+			position: absolute;
+		}
+
+		.logo01 {
+			width: 1.44rem;
+			top: .05rem;
+			left: 0;
+
+			@include sp {
+				width: 1.58rem;
+				top: .2rem;
+				left: -.1rem;
+			}
+		}
+
+		.logo02 {
+			width: .36rem;
+			top: .05rem;
+			left: 1.51rem;
+
+			@include sp {
+				width: .39rem;
+				top: .2rem;
+				left: 1.56rem;
+			}
+		}
+
+		.logo03 {
+			width: (.36rem / 79 * 240 * 1.084);
+			top: .06rem;
+			right: (.36rem / 79 * 166 * 1.084);
+
+			@include sp {
+				width: (.39rem / 79 * 240 * 1.084);
+				top: .2rem;
+				right: (.39rem / 79 * 166 * 1.084 + 1.01rem);
+			}
+		}
+
+		.logo04 {
+			width: (.36rem / 79 * 155 * 1.084);
+			top: .06rem;
+			right: 0;
+
+			@include sp {
+				width: (.39rem / 79 * 155 * 1.084);
+				top: .2rem;
+				right: 1.01rem;
+			}
+		}
+
+		.link {
+			@extend %lato;
+			display: flex;
+			position: absolute;
+			right: 0;
+			bottom: .13rem;
+			font-size: .14rem;
+			letter-spacing: 0;
+			line-height: 1;
+
+			@include sp {
+				display: none;
+			}
+
+			li {
+				background: 0 50% no-repeat;
+			}
+
+			.contact {
+				padding: 0 0 0 .19rem;
+				background-image: url("/assets/imgs/ico-mail.png");
+				background-size: .14rem auto;
+			}
+
+			.english {
+				margin: 0 0 0 .2rem;
+				padding: 0 0 0 .17rem;
+				background-image: url("/assets/imgs/ico-globe.png");
+				background-size: .12rem auto;
+			}
+		}
+	}
+
+	// navigation
+	// ==========================================================================
+
+	.navigation {
+		.btMenu {
+			display: none;
+
+			@include sp {
+				$barBoxWidth: .4rem;
+				$barBoxHeight: .29rem;
+				$barHeight: .03rem;
+
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 1rem;
+				height: 1rem;
+				position: absolute;
+				top: 0;
+				right: 0;
+				background: $colorA;
+
+				.bar {
+					width: $barBoxWidth;
+					height: $barBoxHeight;
+					position: relative;
+
+					&::before,
+					&::after,
+					span {
+						display: block;
+						width: 100%;
+						height: $barHeight;
+						position: absolute;
+						top: 50%;
+						left: 0;
+						background: #fff;
+						transition: .2s;
+					}
+
+					&::before,
+					&::after {
+						content: '';
+						transition-property: transform;
+					}
+
+					&::before {
+						transform: translate3D(0, $barBoxHeight / -2, 0);
+					}
+
+					&::after {
+						transform: translate3D(0, calc(#{$barBoxHeight} / 2 - #{$barHeight}), 0);
+					}
+
+					span {
+						transform: translate(0, -50%);
+						transition-property: opacity;
+					}
+				}
+			}
+		}
+
+		&.active {
+			.btMenu {
+				.bar {
+					&::before {
+						transform: translate3D(0, -50%, 0) rotate(135deg);
+					}
+
+					&::after {
+						transform: translate3D(0, -50%, 0) rotate(45deg);
+					}
+
+					span {
+						opacity: 0;
+					}
+				}
+			}
+
+			nav {
+				transform: translate3d(0, 0, 0);
+			}
+		}
+
+		// ==========================================================================
+
+		nav {
+			background: $colorA;
+			color: #fff;
+
+			@include sp {
+				width: 100%;
+				max-height: calc(100vh - 1rem);
+				position: absolute;
+				top: 100%;
+				left: 0;
+				overflow-y: scroll;
+				transform: translate3d(100%, 0, 0);
+				transition: transform .5s;
+			}
+
+			ul {
+				display: flex;
+
+				@include sp {
+					flex-wrap: wrap;
+					padding: 0 spSize(60);
+				}
+
+				li {
+					flex-grow: 1;
+					position: relative;
+
+					@include sp {
+						width: 100%;
+						border-bottom: .01rem solid #fff;
+					}
+
+					&:nth-child(n + 2) {
+						padding-left: .01rem;
+
+						@include sp {
+							padding-left: 0;
+						}
+
+						a::before {
+							content: '';
+							display: block;
+							width: .01rem;
+							height: .35rem;
+							position: absolute;
+							top: .18rem;
+							left: 0;
+							background: rgba(#fff, .3);
+
+							@include sp {
+								content: none;
+							}
+						}
+					}
+
+					a {
+						display: block;
+						padding: .16rem 0;
+						line-height: 1;
+						position: relative;
+						text-align: center;
+						transition: background-color .3s;
+
+						@include sp {
+							padding: 0;
+							line-height: .89rem;
+							text-align: left;
+
+							&.hasChild {
+								position: relative;
+
+								&::before,
+								&::after {
+									content: '';
+									display: block;
+									width: spSize(30);
+									height: spSize(4);
+									position: absolute;
+									top: calc(50% - #{spSize(2)});
+									right: 0;
+									left: auto;
+									background: currentColor;
+								}
+
+								&::after {
+									transform: rotate(90deg);
+									transition: transform .4s;
+								}
+
+								&.active {
+									&::after {
+										transform: rotate(0);
+									}
+								}
+							}
+						}
+
+						@media screen and (hover: hover) {
+							&:hover {
+								background: #3767ab;
+							}
+						}
+
+						.en {
+							display: block;
+							font-size: .18rem;
+							font-weight: bold;
+							letter-spacing: 0;
+
+							@include sp {
+								font-size: .36rem;
+								letter-spacing: .06em;
+							}
+						}
+
+						.ja {
+							display: block;
+							margin: 6px 0 0;
+							font-size: .14rem;
+
+							@include sp {
+								display: none;
+							}
+						}
+					}
+
+					ul {
+						display: none;
+						border: 1px solid $colorA;
+						border-top: none;
+						position: absolute;
+						top: 100%;
+						left: 0;
+						background: #fff;
+						color: $colorA;
+
+						@include sp {
+							border: none;
+							padding-right: 0;
+							position: static;
+							background: transparent;
+							color: inherit;
+						}
+
+						li {
+							border-top: 1px solid $colorA;
+
+							@include sp {
+								border-top-width: .01rem;
+								border-top-color: currentColor;
+								border-bottom: none;
+							}
+
+							&:nth-child(n + 2) {
+								padding-left: .0;
+
+								a::before {
+									content: none;
+								}
+							}
+
+							a {
+								padding-right: calc(.2rem - 1px);
+								padding-left: calc(.2rem - 1px);
+								text-align: left;
+								white-space: nowrap;
+
+								@include sp {
+									padding-right: 0;
+									padding-left: 0;
+								}
+
+								@media screen and (hover: hover) {
+									&:hover {
+										background: #eff2f5;
+									}
+								}
+							}
+						}
+					}
+
+					&.sp {
+						@include sp {
+							display: block;
+							width: 50%;
+							border-bottom: none;
+							padding: .3rem 0;
+
+							a {
+								font-size: .3rem;
+								font-weight: bold;
+								letter-spacing: .25em;
+								line-height: .85rem;
+								text-align: center;
+								text-decoration: underline;
+
+								&::before {
+									content: '';
+									display: inline-block;
+									margin: 0 .1rem 0 0;
+									background: 50% 50% / contain no-repeat;
+								}
+							}
+						}
+					}
+
+					&.contact {
+						@include sp {
+							a::before {
+								width: .44rem;
+								height: .34rem;
+								margin: 0 .1rem 0 0;
+								background-image: url("/assets/imgs/ico-mail_w.png");
+							}
+						}
+					}
+
+					&.english {
+						@include sp {
+							a::before {
+								width: .4rem;
+								height: .4rem;
+								background-image: url("/assets/imgs/ico-globe_w.png");
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// main
+// #############################################################################################
+
+.main {
+	padding: 1.5rem 0 0;
+
+	@include sp {
+		padding: 1rem 0 0;
+	}
+
+	.anchor {
+		width: 100%;
+		position: absolute;
+		top: -1.5rem;
+		left: 0;
+
+		@include sp {
+			top: -1rem;
+		}
+	}
+
+	.articleHeader {
+		padding: .05rem 0 0;
+
+		@include sp {
+			padding: .7rem 0 0;
+		}
+
+		.breadCrumb {
+			@include sp {
+				display: none;
+			}
+
+			ul {
+				display: flex;
+				padding: 0 0 .35rem;
+				font-size: .12rem;
+				line-height: 1.5;
+
+				li {
+					padding: 0 .2rem 0 0;
+					background: url("/assets/imgs/arrow01.svg") calc(100% - .1rem) 50% / .05rem auto no-repeat;
+
+					&:last-child {
+						padding: 0;
+						background: none;
+					}
+				}
+			}
+		}
+	}
+
+	.btMore {
+		display: block;
+		box-sizing: border-box;
+		width: 1rem;
+		border: .01rem solid currentColor;
+		position: relative;
+		background: #fff url("/assets/imgs/arrow01_b.svg") calc(100% - .09rem) 50% / .06rem auto no-repeat;
+		color: $colorA;
+		font-size: .14rem;
+		line-height: .23rem;
+		text-align: center;
+
+		@include sp {
+			width: 3.18rem;
+			padding: 0 0 0 .1rem;
+			background-position: calc(100% - .88rem) 50%;
+			background-size: .11rem auto;
+			font-size: .24rem;
+			line-height: .78rem;
+		}
+
+		&::before {
+			content: '';
+			display: block;
+			box-sizing: border-box;
+			width: 1rem;
+			height: .25rem;
+			border: .01rem solid #505050;
+			position: absolute;
+			top: .03rem;
+			left: .03rem;
+			z-index: -1;
+
+			@include sp {
+				width: 3.18rem;
+				height: .8rem;
+				top: .12rem;
+				left: .12rem;
+			}
+		}
+	}
+
+	.headline01 {
+		margin-top: -.25em;
+		color: $colorA;
+		font-size: .36rem;
+		letter-spacing: 0;
+		line-height: 1.5;
+
+		@include sp {
+			font-size: .48rem;
+		}
+
+		.en {
+			display: block;
+			margin-bottom: -.25em;
+		}
+
+		.en+.ja {
+			display: block;
+			margin: calc(.1rem - .25em) 0 -.25em;
+			color: #666;
+			font-size: .14rem;
+			font-weight: normal;
+
+			@include sp {
+				margin: calc(.08rem - .25em) 0 -.25em;
+				font-size: .24rem;
+			}
+		}
+	}
+
+	.headline02 {
+		font-size: .24rem;
+		line-height: 1;
+
+		@include sp {
+			@include textCrop(52 / 36);
+			padding: 0 0 0 1.22rem;
+			position: relative;
+			font-size: .36rem;
+		}
+
+		.num {
+			@extend %serif;
+			display: inline-block;
+			margin: 0 .5em 0 0;
+			font-size: 1.5em;
+			font-style: italic;
+			transform: translate(0, .1em);
+
+			@include sp {
+				@include textCrop(52 / 36);
+				position: absolute;
+				top: .08rem;
+				left: 0;
+				margin: 0;
+				font-size: .42rem;
+				line-height: 1;
+			}
+		}
+	}
+
+	.headline03 {
+		@include textCrop(1.5);
+		border-bottom: 0.01rem solid #666;
+		padding: 0 0 .04rem;
+		font-size: .24rem;
+
+		&::after {
+			content: none;
+		}
+
+		@include sp {
+			@include textCrop(56 / 36);
+			padding: 0 0 .18rem;
+			font-size: .36rem;
+
+			&::after {
+				content: none;
+			}
+		}
+	}
+
+	.headline04 {
+		@include textCrop(1.5);
+		font-size: .2rem;
+
+		@include sp {
+			@include textCrop(48 / 30);
+			font-size: .3rem;
+		}
+	}
+
+	// ==========================================================================
+
+	.mainVisual {
+		margin: .03rem 0 0;
+		position: relative;
+
+		.image {
+			height: 4.98rem;
+
+			@include sp {
+				height: 4rem;
+			}
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.text {
+			width: 5.48rem;
+			position: absolute;
+			top: (100% * 139 / 498);
+			left: calc(50% - 6rem);
+
+			@include sp {
+				box-sizing: border-box;
+				width: 100%;
+				padding: 0 .3rem;
+				top: 18%;
+				left: 0;
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.menu.news,
+	.menu.columns {
+		padding: .8rem 0;
+
+		@include sp {
+			padding: .7rem 0 .74rem;
+		}
+
+		.inner {
+			display: flex;
+			min-height: 1.3rem;
+			position: relative;
+			z-index: 1;
+
+			@include sp {
+				display: block;
+				min-height: none;
+			}
+		}
+
+		.header {
+			width: 4.46rem;
+
+			@include sp {
+				width: auto;
+			}
+		}
+
+		.table {
+			width: calc(100% - 4.46rem);
+
+			@include sp {
+				width: auto;
+			}
+
+			dl {
+				display: flex;
+				flex-wrap: wrap;
+				margin: -.04rem 0 0;
+
+				@include sp {
+					display: block;
+					margin: .52rem 0 0;
+				}
+
+				dt {
+					width: 1.5rem;
+
+					@include sp {
+						width: auto;
+						margin: .4rem 0 0;
+					}
+				}
+
+				dd {
+					width: calc(100% - 1.5rem);
+
+					@include sp {
+						width: auto;
+					}
+				}
+			}
+		}
+
+		.btMore {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+
+			@include sp {
+				margin: .98rem auto 0;
+				position: relative;
+			}
+		}
+	}
+
+	.menu.columns {
+		background: $colorBg;
+
+		.table {
+			dl {
+
+				dt,
+				dd {
+					&:last-of-type {
+						position: relative;
+
+						&::after {
+							content: '';
+							display: block;
+							width: 100%;
+							height: 100%;
+							position: absolute;
+							left: 0;
+							top: 0;
+							background: linear-gradient(to bottom, rgba($colorBg, 0) 0%, rgba($colorBg, 1) 100%);
+						}
+
+						a {
+							pointer-events: none;
+						}
+					}
+				}
+			}
+
+			.add {
+				display: none;
+
+				dl {
+					margin-top: 0;
+				}
+			}
+
+			.btExpand {
+				height: .2rem;
+				background: url("/assets/imgs/arrow03.svg") 50% 50% / .26rem auto no-repeat;
+				cursor: pointer;
+				transition: transform .4s;
+			}
+
+			&.showAdd {
+				dl {
+					&.default {
+
+						dt,
+						dd {
+							&:last-of-type {
+
+								&::after {
+									content: none;
+								}
+
+								a {
+									pointer-events: all;
+								}
+							}
+						}
+					}
+				}
+
+				.btExpand {
+					transform: scale(1, -1);
+				}
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.about,
+	.fromProjectLeader {
+		position: relative;
+		padding: .8rem 0;
+
+		@include sp {
+			padding: .7rem 0 .8rem;
+		}
+
+		.inner {
+			@extend %clearfix;
+			padding: .3rem 0 0;
+
+			@include sp {
+				display: flex;
+				flex-direction: column-reverse;
+				padding: .6rem 0 0;
+			}
+
+			.image {
+				width: 4.8rem;
+				margin: 0 0 .2rem .46rem;
+				position: relative;
+				float: right;
+
+				@include sp {
+					width: auto;
+					margin: .6rem 0 0;
+					float: none;
+				}
+
+				.caption {
+					box-sizing: border-box;
+					border: .01rem solid #bcbcbc;
+					padding: .06rem .24rem .06rem .1rem;
+					position: absolute;
+					right: -.16rem;
+					bottom: -.16rem;
+					background: #fff;
+					font-size: .14rem;
+					line-height: .24rem;
+					box-shadow: .04rem .04rem 0 0 #dfdfdf;
+
+					@include sp {
+						margin: .4rem .03rem 0 0;
+						padding: .28rem 0 .28rem .29rem;
+						position: static;
+						font-size: .3rem;
+						line-height: .48rem;
+						box-shadow: .03rem .03rem 0 0 #dfdfdf;
+
+					}
+
+					strong {
+						font-size: .16rem;
+
+						@include sp {
+							font-size: .36rem;
+						}
+					}
+				}
+			}
+
+			.text {
+				.catch {
+					@include textCrop(48 / 36);
+					margin: 0 0 .2rem;
+					font-size: .24rem;
+
+					@include sp {
+						margin: 0 0 .38rem;
+						font-size: .36rem;
+					}
+				}
+
+				p {
+					@include textCrop(30 / 16);
+
+					@include sp {
+						@include textCrop(48 / 30);
+					}
+				}
+			}
+		}
+	}
+
+	.fromProjectLeader {
+		padding-top: 0;
+
+		@include sp {
+			padding-bottom: 1.05rem;
+		}
+	}
+
+	// ==========================================================================
+
+	.mission {
+		padding: .8rem 0;
+		position: relative;
+		background: #005a6e;
+		color: #fff;
+
+		@include sp {
+			padding: .7rem 0 .8rem;
+		}
+
+		.headline01 .en,
+		.headline01 .ja {
+			color: #fff;
+		}
+
+		section {
+			margin: 0 .6rem;
+			padding: .44rem 0 0;
+
+			@include sp {
+				margin: 0 .3rem;
+				padding: .56rem 0 0;
+			}
+
+			&+section {
+				margin-top: .3rem;
+				border-top: .01rem solid #fff;
+				padding-top: .3rem;
+
+				@include sp {
+					margin-top: .4rem;
+					padding-top: .4rem;
+				}
+			}
+
+			p {
+				@include textCrop(30 / 16);
+				margin: .26rem 0 0;
+			}
+
+			.list {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+				margin: .2rem 0 0;
+				padding: 0 .28rem;
+
+				@include sp {
+					display: block;
+					margin: .4rem 0 0;
+					padding: 0 .47rem;
+				}
+
+				li {
+					width: calc((100% - 0.8rem) / 3);
+					position: relative;
+					background: #fff;
+
+					@include sp {
+						width: auto;
+						margin: .12rem 0 0;
+					}
+
+
+					a,
+					.link {
+						display: flex;
+						align-items: center;
+						height: 1.3rem;
+						padding: 0 .2rem;
+						color: $colorA;
+						font-size: .2rem;
+						font-weight: bold;
+						line-height: 1.5;
+
+						@include sp {
+							height: 1.8rem;
+							font-size: .3rem;
+							font-weight: bold;
+							line-height: (40 / 30);
+						}
+					}
+
+					&::before,
+					&::after {
+						content: '';
+						display: block;
+						width: 0;
+						height: 0;
+						border: 0 solid transparent;
+						position: absolute;
+						top: 0;
+					}
+
+					&::before {
+						border-bottom-width: 1.3rem;
+						border-left-width: .28rem;
+						border-bottom-color: #fff;
+						right: 100%;
+
+						@include sp {
+							border-bottom-width: 1.8rem;
+							border-left-width: .4rem;
+						}
+					}
+
+					&::after {
+						border-top-width: 1.3rem;
+						border-right-width: .28rem;
+						border-top-color: #fff;
+						left: 100%;
+
+						@include sp {
+							border-top-width: 1.8rem;
+							border-right-width: .4rem;
+						}
+					}
+
+					.num {
+						@extend %serif;
+						margin: 0 .17rem 0 0;
+						font-style: italic;
+						line-height: 1;
+						letter-spacing: 0;
+						text-align: center;
+
+						@include sp {
+							padding: 0 0 .3rem;
+						}
+
+						.label {
+							display: block;
+							font-size: .2rem;
+
+							@include sp {
+								font-size: .3rem;
+								white-space: nowrap;
+							}
+						}
+
+						.number {
+							display: block;
+							font-size: .62rem;
+							transform: translate(-.14em, 0);
+
+							@include sp {
+								font-size: .8rem;
+							}
+						}
+					}
+				}
+			}
+
+			.secondary {
+				margin: .2rem 0 0;
+				font-size: .2rem;
+				font-weight: bold;
+				line-height: 1;
+
+				@include sp {
+					font-size: .3rem;
+				}
+
+				a {
+					display: inline-block;
+					padding: 0 1em 0 0;
+					background: url(/assets/imgs/arrow01_w.svg) 100% 50%/0.06rem auto no-repeat;
+
+					@include sp {
+						background-size: .09rem auto;
+					}
+				}
+
+				.num {
+					padding: 0 .5em 0 0;
+				}
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.lower {
+		margin: .3rem 0 1rem;
+
+		@include sp {
+			margin: .6rem 0 1rem;
+		}
+
+		h1 {
+			@extend .headline03;
+			margin: 0 0 .3rem;
+			padding: .2rem 0 0;
+
+			&+h2 {
+				padding: .2rem 0 0;
+
+				@include sp {
+					padding: .6rem 0 0;
+				}
+			}
+		}
+
+		h2 {
+			@extend .headline04;
+			padding: .8rem 0 0;
+		}
+
+		h3:not(.headline03) {
+			@extend .headline04;
+			clear: both;
+			padding: .8rem 0 0;
+		}
+
+		h6 {
+			font-size: .14rem;
+			font-weight: normal;
+			line-height: (20 / 14);
+
+			@include sp {
+				font-size: .2rem;
+				line-height: (36 / 20);
+			}
+		}
+
+		/*section {
+			& + section {
+				margin: 1rem 0 0;
+			}
+			section {
+				margin: .2rem 0 0;
+
+				@include sp {
+					margin: .6rem 0 0;
+				}
+				& + section {
+					margin: .8rem 0 0;
+				}
+			}
+		}*/
+	}
+
+	// ==========================================================================
+
+	.members {
+		table {
+			width: 11.4rem;
+			margin: .15rem auto 0;
+
+			@include sp {
+				width: 100%;
+				margin: .6rem 0 0;
+			}
+
+			thead {
+				th {
+					background: #eff2f5;
+					padding: .05rem .2rem;
+
+					@include sp {
+						padding: .28rem .3rem;
+					}
+				}
+			}
+
+			tbody {
+
+				th,
+				td {
+					padding: .1rem .2rem;
+
+					@include sp {
+						padding: .24rem .3rem;
+					}
+				}
+
+				th {
+					box-sizing: border-box;
+					width: 2.44rem;
+					font-weight: normal;
+
+					@include sp {
+						width: 2.4rem;
+					}
+				}
+
+				tr:nth-child(even) {
+
+					th,
+					td {
+						background: #f5f5f5;
+					}
+				}
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.research {
+		figure {
+			width: 4.6rem;
+			margin: .6rem 0 0 .2rem;
+			float: right;
+			clear: both;
+
+			@include sp {
+				width: 100%;
+				margin: .6rem 0 0;
+			}
+
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
+			}
+
+			figurecaption {
+				display: block;
+				margin: .05rem 0 0;
+				font-size: .14rem;
+				line-height: 1.5;
+			}
+
+			&+h2 {
+				margin-top: .6rem;
+
+				@include sp {
+					margin-top: 0;
+					padding: .2rem 0 0;
+					clear: both;
+
+					&+ul,
+					&+p {
+						margin: .2rem 0 0;
+					}
+				}
+			}
+		}
+
+		h1+figure {
+			margin-top: .2rem;
+
+			&+h2 {
+				margin-top: .2rem;
+
+				@include sp {
+					margin-top: 0;
+				}
+			}
+		}
+
+		ul {
+			margin: .1rem 0 0;
+			padding: 0 0 0 .3rem;
+
+			@include sp {
+				padding: 0;
+			}
+
+			&+p {
+				margin-top: .16rem;
+			}
+		}
+
+		li {
+			padding: 0 0 0 3.9em;
+			text-indent: -3.9em
+		}
+
+		p {
+			@extend %clearfix;
+			margin: .1rem 0 0;
+			padding: 0 0 0 .3rem;
+
+			@include sp {
+				padding: 0;
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.entry {
+		.post {
+			@extend %clearfix;
+
+			.date {
+				margin: 0 0 .15rem;
+				padding: 0 0 0 .2rem;
+				background: url("/assets/imgs/ico-calendar.png") 0 50% / .12rem auto no-repeat;
+				color: #666;
+				font-size: .11rem;
+				line-height: .12rem;
+
+				@include sp {
+					margin: 0 0 .3rem;
+					padding: 0 0 0 .4rem;
+					background-size: .24rem auto;
+					font-size: .22rem;
+					line-height: .24rem;
+				}
+			}
+
+			h1 {
+				@extend .headline04;
+				border-bottom: none;
+				padding: .5rem 0 0;
+
+				&::after {
+					content: block;
+				}
+			}
+
+			p {
+				@include textCrop(30 / 16);
+				margin: .3rem 0 0;
+			}
+
+			.headline03+p {
+				margin-top: .16rem;
+			}
+
+			h1+p {
+				margin-top: .24rem;
+			}
+
+			a {
+				//padding: 0 0 0 .18rem;
+				//background: url("/assets/imgs/arrow01_b.svg") 0 50% / .06rem auto no-repeat;
+				color: #3872b8;
+				text-decoration: underline;
+			}
+
+			.def_set {
+				padding-left: .4rem;
+			}
+
+			li.disc {
+				list-style-type: disc;
+			}
+
+			li.decimal {
+				list-style-type: decimal;
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.archive {
+		.headline03 {
+			font-weight: bold;
+		}
+
+		.list {
+			ol {
+				margin: 9px 0 0;
+
+				&+.headline03 {
+					margin: .3rem 0 0;
+				}
+			}
+
+			li {
+				margin: 6px 0 0;
+				padding: 0 0 0 1.28rem;
+				position: relative;
+
+				@include sp {
+					padding: 0;
+				}
+
+				time {
+					display: block;
+					width: 1.28rem;
+					position: absolute;
+					top: 0;
+					left: 0;
+
+					@include sp {
+						width: auto;
+						position: static;
+					}
+				}
+			}
+		}
+	}
+
+	.entry,
+	.archive,
+	.publications,
+	.symposium {
+		.col2 {
+			display: flex;
+			justify-content: space-between;
+
+			@include sp {
+				display: block;
+			}
+
+			.post,
+			.list {
+				width: 9.1rem;
+
+				@include sp {
+					width: auto;
+				}
+			}
+
+			.sideMenu {
+				width: 2.5rem;
+
+				@include sp {
+					width: auto;
+					margin: .4rem 0 0;
+				}
+
+				.label {
+					padding: .03rem .1rem;
+					background: #eff2f5;
+					font-weight: bold;
+				}
+
+				dt {
+					border-top: 1px solid #e1e1e1;
+					padding: .15rem 0 0 .27rem;
+					background: url("/assets/imgs/ico-calendar.png") .1rem .15rem / .12rem auto no-repeat;
+					color: #666;
+					font-size: .11rem;
+					line-height: .12rem;
+
+					@include sp {
+						padding: .3rem 0 0 .54rem;
+						background-position: .2rem .3rem;
+						background-size: .24rem auto;
+						font-size: .22rem;
+						line-height: .24rem;
+					}
+				}
+
+				dd,
+				li {
+					padding: .06rem .1rem .17rem;
+					font-size: .14rem;
+					line-height: (20 / 14);
+
+					@include sp {
+						padding: .12rem .2rem .34rem;
+						font-size: .28rem;
+					}
+				}
+
+				li {
+					border-top: 1px solid #e1e1e1;
+					padding-top: .17rem;
+
+					@include sp {
+						padding-top: .34rem;
+					}
+				}
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.contact {
+		.wrap>p {
+			margin: 0 0 .25rem;
+			font-weight: bold;
+
+			&.warning {
+				color: #c00;
+			}
+		}
+
+		dl {
+			display: flex;
+			flex-wrap: wrap;
+			border-bottom: 1px solid #e6e6e6;
+
+			@include sp {
+				display: block;
+			}
+
+			dt,
+			dd {
+				box-sizing: border-box;
+				border-top: 1px solid #e6e6e6;
+			}
+
+			dt {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				width: 2.2rem;
+				padding: 0 0 0 .3rem;
+				background: #f5f5f5;
+				font-size: .2rem;
+				font-weight: bold;
+				letter-spacing: 0;
+
+				@include sp {
+					display: block;
+					width: auto;
+					padding: 10px;
+					font-size: 16px;
+				}
+			}
+
+			dd {
+				width: calc(100% - 2.2rem);
+				padding: .2rem .3rem .2rem .6rem;
+
+				@include sp {
+					display: block;
+					width: auto;
+					padding: 10px;
+				}
+
+				input,
+				textarea {
+					display: block;
+					box-sizing: border-box;
+					width: 100%;
+					border: 1px solid #999;
+					padding: .2rem .1rem;
+					border-radius: 0;
+
+					@include sp {
+						padding: 10px;
+						font-size: 16px;
+					}
+				}
+
+				textarea {
+					height: 2rem;
+				}
+
+				.text {
+					padding: .15rem 0;
+					font-weight: bold;
+
+					@include sp {
+						padding: 10px;
+						font-size: 16px;
+					}
+				}
+			}
+		}
+
+		.policy {
+			margin: .5rem 0 0;
+			border: 1px solid $colorA;
+			padding: .25rem .6rem;
+			line-height: (29 / 16);
+
+			@include sp {
+				margin: 25px 0 0;
+				padding: 10px;
+			}
+
+			.label {
+				margin: 0 0 .1rem;
+				border-bottom: 1px solid #d3e7f6;
+				padding: 0 0 .1rem;
+				color: $colorA;
+				font-size: .2rem;
+				font-weight: bold;
+				letter-spacing: 0;
+				line-height: 1.5;
+
+				@include sp {
+					font-size: inherit;
+				}
+			}
+		}
+
+		.btContact {
+			display: block;
+			width: 2.7rem;
+			margin: .5rem auto 0;
+			border: none;
+			padding: 0;
+			background: $colorA;
+			border-radius: 0;
+			color: #fff;
+			font-weight: bold;
+			letter-spacing: 0;
+			line-height: .6rem;
+			text-align: center;
+
+			@include sp {
+				width: 100%;
+				font-size: 16px;
+				line-height: 40px;
+			}
+		}
+	}
+}
+
+// footer
+// #############################################################################################
+
+.gFooter {
+	background: #f5f5f5;
+
+	// ==========================================================================
+
+	.pageTop {
+		display: none;
+
+		@include sp {
+			display: block;
+			color: #206b87;
+			font-size: .3rem;
+			letter-spacing: 0;
+			line-height: 1rem;
+			text-align: center;
+
+			&::before {
+				content: '';
+				display: inline-block;
+				width: .28rem;
+				height: .28rem;
+				margin: 0 .14rem 0 0;
+				background: url("/assets/imgs/arrow02.svg") 0 0 / contain no-repeat;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.inner {
+		display: flex;
+		justify-content: space-between;
+		padding: .6rem 0 .3rem;
+
+		@include sp {
+			display: block;
+			padding: 0;
+		}
+	}
+
+	.navigation {
+		@extend %lato;
+		width: 5.14rem;
+		font-size: .14rem;
+		line-height: 1;
+
+		@include sp {
+			box-sizing: border-box;
+			width: 100vw;
+			margin: 0 -.3rem;
+			padding: .38rem .3rem .64rem;
+			background: $colorA;
+			color: #fff;
+			font-family: "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+			font-size: .3rem;
+			font-weight: bold;
+			line-height: .68rem;
+		}
+
+		ul {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			align-content: space-between;
+			height: (.36rem * 3);
+
+			@include sp {
+				height: (.79rem * 4);
+			}
+
+			li {
+				margin: 0 0 .22rem;
+				padding: 0 0 0 .13rem;
+				background: url("/assets/imgs/arrow01.svg") 0 50% / .06rem auto no-repeat;
+
+				@include sp {
+					display: flex;
+					flex-direction: column;
+					justify-content: flex-end;
+					box-sizing: border-box;
+					width: 3.3rem;
+					height: .79rem;
+					margin: 0;
+					border-bottom: .01rem solid currentcolor;
+					padding: 0;
+					background: none;
+
+					&.sp {
+						display: flex;
+					}
+
+					a {
+						display: block;
+						font-size: .3rem;
+						letter-spacing: 0;
+						white-space: nowrap;
+					}
+				}
+			}
+		}
+	}
+
+	.contact {
+		@include sp {
+			padding: .54rem 0 .36rem;
+		}
+
+		.logo {
+			width: 3.36rem;
+
+			@include sp {
+				width: 3.88rem;
+				margin: 0 auto;
+			}
+
+			&.adjust {
+				width: 4.66rem;
+
+				@include sp {
+					width: 6.53rem;
+				}
+			}
+		}
+
+		.text {
+			margin: .08rem 0 0;
+			line-height: (28 / 16);
+
+			@include sp {
+				margin: .24rem 0 0;
+				font-size: .24rem;
+				line-height: 1.5;
+				text-align: center;
+
+				span {
+					display: block;
+					margin: .16rem 0 0;
+				}
+			}
+		}
+
+		.inner {
+			align-items: flex-end;
+			margin: .12rem 0 0;
+			padding: 0;
+			line-height: (26 / 16);
+
+			@include sp {
+				margin: .0;
+				padding: 0;
+				font-size: .24rem;
+				line-height: 1.5;
+				text-align: center;
+			}
+
+			.mail {
+				padding: 0 0 0 .25rem;
+				background: url("/assets/imgs/ico-mail.png") 0 50% / .16rem auto no-repeat;
+
+				@include sp {
+					display: inline-block;
+					padding: 0 0 0 .4rem;
+					background-size: .26rem auto;
+				}
+			}
+		}
+	}
+
+	// ==========================================================================
+
+	.sdgs {
+		padding: .32rem 0;
+		background: #efefef;
+		text-align: center;
+
+		@include sp {
+			padding: .24rem 0;
+			font-size: .2rem;
+			line-height: 1.5;
+		}
+	}
+
+	.copyright {
+		padding: .1rem 0;
+		background: #fff;
+		font-size: .11rem;
+		letter-spacing: 0;
+		line-height: 1.5;
+		text-align: center;
+
+		@include sp {
+			padding: .75rem 0;
+			font-size: .2rem;
+		}
+	}
+}
+
+.mt-image-left,
+.mt-image-none[style*="float:left"] {
+	margin: 0 20px 20px 0;
+}
+
+
+// ==========================================================================
+// 2022/07 研究内容ページ
+// ==========================================================================
+.main .lower.research,
+.main .lower.research--detail,
+.main .lower.publications {
+
+	h1,
+	h2 {
+		position: relative;
+	}
+
+	section {
+
+		h1,
+		h2 {
+
+			&+p {
+				padding-top: .4rem;
+
+				@include sp {
+					padding-top: .6rem;
+				}
+			}
+
+			&+.tableWrapper {
+				margin-top: .4rem;
+
+				@include sp {
+					margin-top: .6rem;
+				}
+			}
+		}
+
+		h2 {
+			padding: .15rem .25rem;
+			background: #eff2f5;
+			line-height: 1.5;
+
+			@include sp {
+				padding: .21rem .3rem;
+				line-height: (54 / 30);
+			}
+		}
+
+		p {
+			@include textCrop(30 / 16);
+			margin: 0;
+			padding: 0;
+		}
+	}
+}
+
+.main .lower.research,
+.main .lower.publications {
+	.section {
+		margin: .6rem 0 0;
+		position: relative;
+
+		h1 {
+			margin: 0;
+			padding: 0 0 .04rem;
+
+			@include sp {
+				padding: 0 0 .2rem
+			}
+		}
+
+		h3 {
+			padding: 0 0 0 .8rem;
+			position: relative;
+			line-height: (36 / 20);
+
+			@include sp {
+				padding: 0 0 0 1.2rem;
+				position: relative;
+				line-height: (54 / 30);
+			}
+
+			&::before {
+				width: .04rem;
+				height: auto;
+				margin: 0;
+				position: absolute;
+				top: .06rem;
+				bottom: .06rem;
+				left: 0;
+				background: $colorA;
+
+				@include sp {
+					width: .06rem;
+					height: .9rem;
+					top: .12rem;
+					bottom: auto;
+				}
+			}
+
+			&::after {
+				margin-top: -.06rem;
+
+				@include sp {
+					margin-top: -.12rem;
+				}
+			}
+
+			span {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: .24rem;
+				color: $colorA;
+			}
+
+			&+.inner {
+				margin-top: .4rem;
+			}
+		}
+
+		p {
+			&+h3 {
+				margin-top: .54rem;
+
+				@include sp {
+					margin-top: .58rem;
+				}
+			}
+		}
+
+		.inner {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: space-between;
+			padding: .0 0 0 .8rem;
+
+			@include sp {
+				display: block;
+				padding: 0;
+			}
+
+			.image {
+				width: 3.6rem;
+				margin: 0;
+				float: none;
+
+				@include sp {
+					width: auto;
+
+					img {
+						width: 100%;
+					}
+				}
+			}
+
+			.text {
+				width: calc(100% - 4rem);
+
+				@include sp {
+					width: auto;
+					padding-top: .6rem;
+				}
+			}
+
+			.bt--more {
+				display: block;
+				width: 1.5rem;
+				margin: .4rem 0 0;
+				background: url("../imgs/arrow01_b.svg") calc(100% - .1rem) 50% / .09rem auto no-repeat;
+				color: $colorA;
+				font-size: .18rem;
+				font-weight: bold;
+				line-height: .5rem;
+				text-align: center;
+				box-shadow: inset 0 0 0 1px currentColor;
+
+				@include sp {
+					width: 3.3rem;
+					margin: .3rem auto 0;
+					background-position: calc(100% - .77rem);
+					background-size: .13rem auto no-repeat;
+					color: $colorA;
+					font-size: .24rem;
+					line-height: 1rem;
+				}
+			}
+
+			&+h3 {
+				margin-top: .54rem;
+
+				@include sp {
+					margin-top: .58rem;
+				}
+			}
+		}
+
+		section {
+			@include sp {
+				margin: .8rem 0 0;
+			}
+		}
+	}
+}
+
+.main .lower.research--detail {
+	margin-top: .5rem;
+
+	@include sp {
+		margin-top: .6rem;
+	}
+
+	.wrap {
+		display: flex;
+		justify-content: space-between;
+
+		@include sp {
+			display: block;
+		}
+	}
+
+	.sNav {
+		width: 2.5rem;
+
+		@include sp {
+			display: none;
+		}
+
+		.label {
+			padding: .12rem .1rem;
+			background: #eff2f5;
+			font-size: .16rem;
+			font-weight: bold;
+			line-height: 1;
+		}
+
+		.act {
+			border-top: 1px solid #cacaca;
+			padding: .1rem;
+			background: $colorA;
+			color: #fff;
+			font-size: .14rem;
+			font-weight: bold;
+			line-height: (20 / 14);
+		}
+
+		.theme {
+			border-top: 1px solid #cacaca;
+			padding: .08rem 0;
+			color: $colorA;
+			font-size: .14rem;
+			font-weight: bold;
+			line-height: (20 / 14);
+		}
+
+		.list {
+			li {
+				border-top: 1px solid #cacaca;
+			}
+
+			a {
+				display: block;
+				padding: .08rem .29rem .08rem .1rem;
+				background: url("../imgs/arrow01_b.svg") calc(100% - .1rem) 50% / .09rem auto no-repeat;
+				font-size: .14rem;
+				line-height: (20 / 14);
+			}
+		}
+	}
+
+	.main {
+		width: 9rem;
+		padding: 0;
+
+		@include sp {
+			width: auto;
+		}
+
+		.label {
+			font-size: .14rem;
+			font-weight: bold;
+			line-height: 1;
+
+			@include sp {
+				font-size: .24rem;
+
+				.act {
+					@include textCrop(46 / 24);
+				}
+			}
+
+			.theme {
+				display: inline-block;
+				margin: .1rem 0 0;
+				padding: .08rem .12rem;
+				color: $colorA;
+				box-shadow: inset 0 0 0 1px #666;
+
+				@include sp {
+					display: block;
+					margin: .2rem 0 0;
+					padding: .02rem .2rem;
+					line-height: (46 / 24);
+				}
+			}
+		}
+
+		h1 {
+			margin: .4rem 0 0;
+			padding: 0 0 .08rem .56rem;
+			position: relative;
+
+			@include sp {
+				margin: .6rem 0 0;
+				padding: 0 0 .2rem .9rem;
+			}
+
+			span {
+				display: block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				color: $colorA;
+			}
+
+			&+h2 {
+				margin-top: .4rem;
+
+				@include sp {
+					margin-top: .8rem;
+				}
+			}
+		}
+
+		p+ul,
+		p+ol {
+			margin-top: .3rem;
+
+			@include sp {
+				margin-top: .5rem;
+			}
+		}
+
+		ul,
+		ol {
+			@include textCrop(30/16);
+			padding: .4rem 0 0;
+
+			@include sp {
+				padding: .6rem 0 0;
+			}
+
+			li {
+				padding: 0 0 0 .2rem;
+				position: relative;
+
+				&::before {
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+
+				@include sp {
+					padding: 0 0 0 .4rem;
+				}
+			}
+
+			a {
+				color: $colorL;
+				text-decoration: underline;
+			}
+
+			&+ul,
+			&+ol {
+				margin-top: .3rem;
+
+				@include sp {
+					margin-top: .5rem;
+				}
+			}
+		}
+
+		ul {
+			li::before {
+				content: '・';
+			}
+		}
+
+		ol {
+			counter-reset: num;
+
+			li {
+				counter-increment: num;
+
+				&::before {
+					content: counter(num)".";
+				}
+			}
+		}
+
+		.inner {
+			margin: .4rem 0 0;
+
+			@include sp {
+				margin: .6rem 0 0;
+			}
+
+			&--vertical {
+				.image {
+					margin: .4rem 0 0;
+
+					@include sp {
+						margin: .6rem 0 0;
+					}
+
+					&--vertical {
+						figure+figure {
+							margin: .32rem 0 0;
+
+							@include sp {
+								margin: .4rem 0 0;
+							}
+						}
+					}
+
+					&--horizontal {
+						display: flex;
+						justify-content: space-between;
+
+						@include sp {
+							display: block;
+						}
+
+						figure {
+							width: 4.3rem;
+
+							@include sp {
+								width: auto;
+
+								&+figure {
+									margin: .4rem 0 0;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&--horizontal {
+				display: flex;
+				justify-content: space-between;
+
+				@include sp {
+					display: block;
+				}
+
+				.text {
+					width: 5.5rem;
+
+					@include sp {
+						width: auto;
+					}
+				}
+
+				.image {
+					width: 3.2rem;
+
+					@include sp {
+						width: auto;
+						margin: .6rem 0 0;
+					}
+
+					&--vertical {
+						figure+figure {
+							margin: .32rem 0 0;
+
+							@include sp {
+								margin: .4rem 0 0;
+							}
+						}
+					}
+				}
+			}
+
+			figure {
+				text-align: center;
+			}
+
+			figcaption {
+				@include textCrop(20 / 14);
+				padding: .1rem 0 0;
+				color: #666;
+				font-size: .14rem;
+				text-align: left;
+
+				@include sp {
+					@include textCrop(1.5);
+					padding: .2rem 0 0;
+					font-size: .24rem;
+				}
+			}
+
+			&+h2 {
+				margin-top: .6rem;
+
+				@include sp {
+					margin-top: .8rem;
+				}
+			}
+		}
+
+		.link {
+			@include textCrop(30/16);
+			padding: .4rem 0 0;
+
+			li {
+				padding: 0 0 0 .18rem;
+				background: url("../imgs/arrow01_b.svg") 0 .07rem / .09rem auto no-repeat;
+			}
+
+			a {
+				color: $colorL;
+				text-decoration: underline;
+			}
+		}
+
+		.reference {
+			margin: .7rem 0 0;
+
+			@include sp {
+				margin: .9rem 0 0;
+			}
+
+			.label {
+				border-bottom: 1px solid #666;
+				padding: 0 0 .2rem .24rem;
+				font-size: .2rem;
+				font-weight: bold;
+				line-height: 1;
+
+				@include sp {
+					padding: 0 0 .3rem;
+					font-size: .3rem;
+				}
+			}
+		}
+	}
+}
+
+.main .lower.publications {
+	.section {
+		h1+table {
+			margin: .4rem 0 0;
+		}
+
+		h2+h3 {
+			margin: .4rem 0 0;
+		}
+
+		h3 {
+			padding-left: .2rem;
+
+			&+p {
+				padding-top: .2rem;
+				padding-left: .2rem;
+			}
+		}
+
+		a {
+			color: $colorL;
+			text-decoration: underline;
+		}
+
+		.tableWrapper {
+			@include sp {
+				width: 100%;
+				overflow-x: scroll;
+			}
+		}
+
+		table {
+			width: 100%;
+			margin: .15rem 0 0;
+
+			@include sp {
+				margin: .6rem 0 0;
+			}
+
+			thead {
+				th {
+					box-sizing: border-box;
+					background: #eff2f5;
+					padding: .05rem .2rem;
+
+					@include sp {
+						padding: .28rem .3rem;
+					}
+				}
+			}
+
+			tbody {
+
+				th,
+				td {
+					padding: .1rem .2rem;
+
+					@include sp {
+						padding: .24rem .3rem;
+					}
+				}
+
+				th {
+					box-sizing: border-box;
+					font-weight: normal;
+
+				}
+
+				tr:nth-child(even) {
+
+					th,
+					td {
+						background: #f5f5f5;
+					}
+				}
+			}
+		}
+	}
+}

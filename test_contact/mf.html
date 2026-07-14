@@ -1,0 +1,232 @@
+<?php include("inc_header.php"); ?>
+<!DOCTYPE html>
+<html lang="ja">
+
+<?php include("inc/contact_header.inc"); ?>
+<link href="fileupload/css/fileupload.css" rel="stylesheet">
+<link href="css/validationEngine.jquery.css" rel="stylesheet">
+<link href="css/field_sub.css" rel="stylesheet">
+<script src="js/form_setvalue.js" type="text/javascript"></script>
+<script>
+	const allowedSize = <?php echo $config['upload_file_size_max']; ?>; // 最大許可ファイルサイズ
+</script>
+<main id="main">
+	<article>
+		<header class="pageHeader">
+			<div class="image"></div>
+			<h2 class="title"><span><strong>お問い合わせ</strong><span>Contact</span></span></h2>
+			<ul class="breadCrumb">
+				<li><a href="../index.html">HOME</a></li>
+				<li>お問い合わせ-Contact</li>
+			</ul>
+		</header>
+
+		<div id="form">
+			<div class="wrap">
+				<form action="./form.php" method="post" id="form01" enctype="multipart/form-data">
+					<input type="hidden" name="to" value="<?php echo $_GET['to'] ?>" />
+					<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $config['upload_file_size_max'] ?>">
+					<input type="hidden" name="formname" value="<?php echo $config['formname'] ?>" />
+					<div class="headline">
+						<p class="lead">フォームにご記入いただいたメッセージなどの情報を、コンタクト先にお届けします。お気軽にご利用ください。<br>
+							個人情報保護のため、ご記入いただいた情報は暗号化されて送信されます。また、個人情報保護法の趣旨に従い、適切に管理を行い漏洩防止に努めております。安心してご利用ください。
+						</p>
+						<div id="globalsign">
+							<div class="inner">
+								<div id="ss_gmo_globalsign_secured_site_seal" oncontextmenu="return false;" style="width:100px; height:50px">
+									<img id="ss_gmo_globalsign_img" src="data:image/gif;base64,R0lGODlhAQABAGAAACH5BAEKAP8ALAAAAAABAAEAAAgEAP8FBAA7" alt="" onclick="ss_open_profile()" style="cursor:pointer; border:0; width:100%">
+								</div>
+								<script>
+									window.addEventListener('load', () => {
+										let s = document.createElement("script");
+										s.src = "https://seal.atlas.globalsign.com/gss/one/seal?image=seal_100-50_en.png";
+										document.body.appendChild(s);
+									});
+								</script>
+								<strong>※個人情報保護のため、情報は暗号化されて送信されます。</strong>
+
+							</div>
+							<div class="text">このWebサイトからの情報の送信には、暗号化通信（ssl）を採用しています。ご記入いただいた情報は暗号化されて送信され、安全な通信環境を提供しています。</div>
+						</div>
+					</div>
+					<table>
+						<tr>
+							<th>コンタクト先</th>
+							<td>
+								<?php echo $inquiry['facility'] ?>
+								<!--<input type="text" name="item00" value="<?php echo $inquiry['facility'] ?>" readonly="readonly" />-->
+							</td>
+							<input type="hidden" name="item00" value="<?php echo $inquiry['id'] ?>" />
+						</tr>
+						<tr>
+							<th class="must">会社名</th>
+							<td><input type="text" class="size01 validate[required]" name="item01"></td>
+						</tr>
+						<tr>
+							<th>部署名</th>
+							<td><input type="text" class="size01" name="item02"></td>
+						</tr>
+						<tr>
+							<th class="must">お名前</th>
+							<td><input type="text" class="size02 validate[required]" name="item03"><span class="note">旧字体・特殊文字はご使用にならないでください。</span></td>
+						</tr>
+						<tr>
+							<th class="must">おなまえ</th>
+							<td><input type="text" class="size02 validate[required]" name="item04"><span class="note">ひらがなでご入力ください。</span></td>
+						</tr>
+						<tr>
+							<th class="must">お電話番号</th>
+							<td><input type="tel" class="size02 validate[required,custom[phone]]" name="item05"><span class="note">半角英数字でお書きください。（例：03-0000-0000）</span></td>
+						</tr>
+						<tr class="table-sub" aria-hidden="true">
+							<th>FAX</th>
+							<td>
+								<div class="field-sub"><input type="tel" class="size02" name="item99" tabindex="-1" autocomplete="off" aria-hidden="true"><span class="note">半角英数字でお書きください。（例：03-0000-0000）</span></div>
+							</td>
+						</tr>
+						<tr>
+							<th>所在地（都道府県）</th>
+							<td>
+								<label class="select-location">
+									<select name="item10">
+										<option value="" selected> 選択してください </option>
+										<option value="北海道">北海道</option>
+										<option value="青森県">青森県</option>
+										<option value="岩手県">岩手県</option>
+										<option value="宮城県">宮城県</option>
+										<option value="秋田県">秋田県</option>
+										<option value="山形県">山形県</option>
+										<option value="福島県">福島県</option>
+										<option value="茨城県">茨城県</option>
+										<option value="栃木県">栃木県</option>
+										<option value="群馬県">群馬県</option>
+										<option value="埼玉県">埼玉県</option>
+										<option value="千葉県">千葉県</option>
+										<option value="東京都">東京都</option>
+										<option value="神奈川県">神奈川県</option>
+										<option value="新潟県">新潟県</option>
+										<option value="富山県">富山県</option>
+										<option value="石川県">石川県</option>
+										<option value="福井県">福井県</option>
+										<option value="山梨県">山梨県</option>
+										<option value="長野県">長野県</option>
+										<option value="岐阜県">岐阜県</option>
+										<option value="静岡県">静岡県</option>
+										<option value="愛知県">愛知県</option>
+										<option value="三重県">三重県</option>
+										<option value="滋賀県">滋賀県</option>
+										<option value="京都府">京都府</option>
+										<option value="大阪府">大阪府</option>
+										<option value="兵庫県">兵庫県</option>
+										<option value="奈良県">奈良県</option>
+										<option value="和歌山県">和歌山県</option>
+										<option value="鳥取県">鳥取県</option>
+										<option value="島根県">島根県</option>
+										<option value="岡山県">岡山県</option>
+										<option value="広島県">広島県</option>
+										<option value="山口県">山口県</option>
+										<option value="徳島県">徳島県</option>
+										<option value="香川県">香川県</option>
+										<option value="愛媛県">愛媛県</option>
+										<option value="高知県">高知県</option>
+										<option value="福岡県">福岡県</option>
+										<option value="佐賀県">佐賀県</option>
+										<option value="長崎県">長崎県</option>
+										<option value="熊本県">熊本県</option>
+										<option value="大分県">大分県</option>
+										<option value="宮崎県">宮崎県</option>
+										<option value="鹿児島県">鹿児島県</option>
+										<option value="沖縄県">沖縄県</option>
+									</select>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<th class="must">メールアドレス</th>
+							<td><input type="email" class="size01 validate[required,custom[email]]" name="item06"><span class="note">半角英数字でお書きください。（例：onamae@webmasters.co.jp）</span></td>
+						</tr>
+						<tr>
+							<th>ホームページアドレス（URL）</th>
+							<td class="website"><input type="text" class="size01 validate[custom[url]]" name="item07"><span class="note">"https://"や"http://"で始まる半角英数字でお書きください。<br>（例：https://www.webmasters.co.jp）</span></td>
+						</tr>
+						<tr>
+							<th>メッセージをご記入ください。</th>
+							<td><textarea name="item08" maxlength="<?php echo($config['textmax']); ?>"></textarea></td>
+						</tr>
+						<tr>
+							<th>添付ファイル</th>
+							<td>
+								<div id="fileUpload">
+									<div class="box">
+										<div class="dropArea" @dragenter="dragEnter" @dragleave="dragLeave" @dragover.prevent @drop.prevent="dropFile" :class="{enter: isEnter}">
+											ここにファイルをドロップ、<br>またはクリックしてファイルを選択
+											<label>
+												<input type="file" name="item09[]" multiple class="inputFile" id="inputFile" @change="changeFile">
+											</label>
+										</div>
+										<div class="files" :class="{hasFiles: isFiles}">
+											<ul class="fileList">
+												<li v-for="(file,index) in files" :key="index">
+													<img src="fileupload/imgs/ico-file.png" alt="" class="fileIcon">
+													<span class="name">{{ file.name }}</span>
+													<img src="fileupload/imgs/ico-close.png" alt="" class="btnClose" @click="deleteFile(index)">
+												</li>
+											</ul>
+											<div class="filesize" :class="{warning: isOversize}">ファイルサイズ: 計 {{ filesize }} <span class="warningMessage">制限を超えています。</span></div>
+											<button type="button" class="btnDeleteAll" @click.prevent="deleteAll">すべて削除</button>
+										</div>
+									</div>
+									<div><span class="note">アップロードできるファイルサイズは合計 15MB まで、<br />
+											使用できるファイルの拡張子は
+											<?php echo($extlist); ?>です。
+										</span></div>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<div class="caution">*印のついている項目は、必ずご記入ください。<br>
+						お預かりする個人情報は、当フォームでのご要望にお応えするためにのみ活用いたします。また、個人情報保護法の趣旨に従い、適切に管理を行い漏洩防止に努めます。</div>
+					<div class="btn">
+						<div class="inner"><input type="submit" id="submit" name="action" value="確認画面へ"></div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</article>
+	<script type="text/javascript">
+<?php echo $jsbuf; ?>
+	</script>
+</main><!-- /mainContents -->
+
+<?php include("inc/contact_footer.inc"); ?>
+<!-- js -->
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
+<script src="fileupload/js/fileupload.js"></script>
+<script src="./js/jquery.validationEngine-ja.js"></script>
+<script src="./js/jquery.validationEngine.js"></script>
+<script>
+	$(function () {
+		$("#form01").validationEngine(
+			'attach', {
+			promptPosition: "topLeft",
+			onValidationComplete: function (form, status) {
+				if (status === true) {
+					submitForm();
+				}
+			}
+		}
+		);
+	});
+</script>
+<script type="text/javascript">
+	document.onkeypress = function(e) {
+		var ref = e.target;
+		if (e.key === 'Enter' && (ref.type != 'textarea')) {
+			return false;
+		}
+	}
+</script>
+
+</body>
+
+</html>

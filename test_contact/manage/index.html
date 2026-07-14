@@ -1,0 +1,188 @@
+<?php
+// 汎用フォーム管理画面html 単フォーム用
+//
+//初期設定
+if(!isset($_SESSION)) {
+// クッキーチェック用クッキーセット
+setcookie("ON", 1);
+}
+
+ini_set( 'display_errors', 1 );
+require_once('../data/config.php');
+require_once('../util.php');
+require_once('../html.php');
+require_once('manageutil.php');
+
+if (version_compare(PHP_VERSION, '5.1.0', '>=')) {//PHP5.1.0以上の場合のみタイムゾーンを定義
+	date_default_timezone_set('Asia/Tokyo');//タイムゾーンの設定（日本以外の場合には適宜設定ください）
+}
+if((isset($_POST['formname']))&&(empty($_COOKIE['ON']))) {	// ブラウザがクッキー拒否なら
+	die('ブラウザのクッキーを設定してください。');
+}
+
+$config = array();
+$items = array();
+$data = array();
+$counters = array();
+$errmsg = null;
+$formname = null;
+
+//初期処理
+config($config);
+formInit($config,$items,$data,$counters);
+mng_define();
+
+$submit = isset($_POST['submit'])? $_POST['submit'] : null;
+$errmsg = null;
+$formname = $config['form_title'];
+
+$GLOBALS['@formname'] = $config['formname'];
+
+switch($submit) {
+	case BTN_LOGIN :
+		if(login($config) === false){
+			$errmsg = 'ID・パスワードが不正です';
+		}else{
+            //ログ出力
+            logWrite('"login : ' . $_POST['user'] . "," . $_POST['pass'] . 'OK"');
+            if($_SESSION['usertype'] == 1){
+				header('Location:manage.php');
+			}else{
+				
+				header('Location:manage.php?mailid=' . $_POST['user']);
+			}
+		}
+		break;
+	default :
+		break;
+}
+
+function login($config){
+	if(empty($_POST['user']) || empty($_POST['pass'])){
+		
+		return(false);
+	}
+	$user = $_POST['user'];
+	$pass = $_POST['pass'];
+	$data = array();
+
+//ユーザテーブル呼び出し
+	$param = array();
+	$param[':formno'] = $config['formno'] ;
+	$param[':user'] = $user ;
+	$db = "mysql:host=" . $config['dbhost'] . ";dbname=" . $config['dbname'] . ";charset=utf8"  ;
+	$sql = "select * from db_manage_user where formno=:formno and user=:user";
+
+	// MySQLに接続
+	try {
+		$dbh = new PDO($db, $config['dbuser'], $config['dbpasswd']);
+#		$dbh->query('SET NAMES utf8');
+		//print('接続に成功しました。<br>');
+		// フォーム設定取得
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute($param);
+		$count = $stmt->fetchColumn();
+		$stmt->execute($param);
+		$data = $stmt->fetch(PDO::FETCH_ASSOC);
+	}catch(PDOException $e){
+		echo('<pre>' . var_dump($e->getMessage()) .'</pre>');
+		die;
+	}
+
+	if(($user == 'admin')&&($pass == 'admin')&&($count == 0)){
+	// adminパスワード設定前はパスワード設定画面へ
+		$_SESSION['user'] = $user;
+		$_SESSION['usertype'] = 1;
+		header('Location:admin.php');
+	}
+	elseif ($count < 1) {
+	// ユーザテーブルにないときはメール宛先テーブルをチェック
+		$param = array();
+		$param[':formno'] = $config['formno'] ;
+		$param[':id'] = $user ;
+		$sql = "select * from db_maillist where formno=:formno and id=:id";
+		// MySQLに接続
+		try {
+			$dbh = new PDO($db, $config['dbuser'], $config['dbpasswd']);
+	#		$dbh->query('SET NAMES utf8');
+			//print('接続に成功しました。<br>');
+			// フォーム設定取得
+			$stmt = $dbh->prepare($sql);
+			$stmt->execute($param);
+			$count = $stmt->fetchColumn();
+			$stmt->execute($param);
+			$data = $stmt->fetch(PDO::FETCH_ASSOC);
+		}catch(PDOException $e){
+			echo('<pre>' . var_dump($e->getMessage()) .'</pre>');
+			die;
+		}
+		if ($count < 1) {
+			$errmsg = 'ログインIDが正しくありません。';
+			return(false);
+		}else{
+			$_SESSION['user'] = $data['id'];
+			$_SESSION['usertype'] = 0;
+		}
+
+	}else{
+		$_SESSION['usertype'] = 1;
+		$_SESSION['user'] = $user;
+	}
+	$cryptpass = strCrypt($pass);
+	$decryptpass = strDecrypt($data['password']);
+	if($cryptpass !== $data['password']){
+		return(false);
+	}else{
+		return(true);
+	}
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- title -->
+  <title>[<?php echo $formname; ?>]管理画面</title>
+<!-- meta -->
+<meta name="Description" content="" />
+<meta name="Keywords" content="" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<!-- container -->
+<div id="header">
+<img src="imgs/hd_logo.png" />
+</div><!-- /header -->
+
+<div id="container">
+  <h1>[<?php echo $formname; ?>]管理画面</h1>
+  <div class="form-wrapper">
+    <form id="FormName" action="index.html" method="POST">
+    <br>
+    <div class="form-item">
+      <label for="ID"></label>
+      <input type="text" name="user" required="required" placeholder="ID"></input>
+    </div>
+    <div class="form-item">
+      <input type="password" name="pass" required="required" placeholder="Password"></input>
+    </div>
+    <div class="errmsg"><?php echo isset($errmsg)? $errmsg : '' ; ?></div>
+    <div class="button-panel">
+      <input type="submit" name="submit" class="button" id="btn_login" title="login" value="<?php echo BTN_LOGIN; ?>">
+    </div>
+  </form>
+  <div class="form-footer">
+  </div>
+  </div>
+<div id="footer">COPYRIGHT© 2018 Webmasters Corporation, ALL RIGHTS RESERVED.</div>
+<!--/footer -->
+</div><!--/container -->
+</body>
+</html>
+
+

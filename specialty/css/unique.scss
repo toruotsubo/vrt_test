@@ -1,0 +1,729 @@
+@charset "utf-8";
+
+/*******************************
+  個別設定
+*******************************/
+
+$txtColor01: #001d7d;
+$txtColor02: #dcdfea;
+$bgColor01: #f5f9fb;
+
+@mixin sp {
+	@media screen and (max-width: 750px) {
+		@content;
+	}
+}
+
+@function spSize ($px) {
+	@return 100vw * $px / 750;
+}
+
+
+.invisible {
+	opacity: 0;
+	transition: 1s;
+}
+
+.visible {
+	opacity: 1;
+	transition: 1s;
+}
+
+#main {
+	.image {
+		&.border {
+			border: 1px solid #ccc;
+		}
+
+		img {
+			width: 100%;
+		}
+	}
+
+	.pageHeader.academy .image {
+		background-image: url("../imgs/academy/img-main.jpg");
+	}
+
+	.pageHeader.b2b .image {
+		background-image: url("../imgs/b2b/img-main.jpg");
+	}
+
+	.pageHeader.movabletype .image {
+		background-image: url("../imgs/movabletype/img-main.jpg");
+	}
+
+	.pageHeader.running .image {
+		background-image: url("../imgs/running/img-main.jpg");
+	}
+
+	.pageHeader.writing .image {
+		background-image: url("../imgs/writing/img-main.jpg");
+	}
+
+	.wrap {
+		@include sp {
+			padding: 0 spSize(40);
+		}
+	}
+
+	.sectionTitle {
+		color: $txtColor01;
+		font-size: 30px;
+		font-weight: bold;
+		line-height: (48 / 30);
+
+		@include sp {
+			font-size: spSize(32);
+			line-height: (48 / 32);
+		}
+
+		&::after {
+			content: '';
+			display: block;
+			width: 60px;
+			height: 2px;
+			margin: 20px 0 0;
+			background: $txtColor01;
+
+			@include sp {
+				width: spSize(60);
+				height: spSize(2);
+				margin: spSize(22) 0 0;
+			}
+		}
+
+		&+p {
+			margin: 40px 0 0;
+			font-size: 16px;
+			line-height: (26 / 16);
+
+			@include sp {
+				margin: spSize(40) 0 0;
+				font-size: spSize(28);
+				line-height: (42 / 28);
+			}
+		}
+	}
+
+	.sectionTitle_s {
+		display: inline-block;
+		border-bottom: 2px solid #07348b;
+		padding: 0 0 5px;
+		color: #333;
+		font-size: 18px;
+		line-height: 28px;
+		font-weight: normal;
+
+		@include sp {
+			font-size: spSize(32);
+			line-height: 1.5;
+		}
+	}
+
+	// ================================================================================
+
+	.sNav {
+		margin: 125px 0 0;
+
+		@include sp {
+			margin: spSize(100) 0 0;
+		}
+
+		ul {
+			display: flex;
+			justify-content: space-between;
+
+			@include sp {
+				flex-direction: column;
+				gap: spSize(20);
+			}
+		}
+
+		li {
+			width: 312px;
+
+			@include sp {
+				width: 100%;
+			}
+		}
+
+		a {
+			display: block;
+			box-sizing: border-box;
+			height: 140px;
+			padding: 31px 9px 0 22px;
+			position: relative;
+			background: #fff linear-gradient(#00549E, #00549E) 0 27px / 4px 23px no-repeat;
+			border-radius: 8px;
+			box-shadow: 0 0 6px rgba(#000, .16);
+
+			@include sp {
+				height: auto;
+				padding: spSize(40);
+				background-position: 0 spSize(40);
+				background-size: spSize(5) spSize(40);
+			}
+
+			.legend {
+				font-size: 18px;
+				font-weight: 600;
+				line-height: 24px;
+
+				@include sp {
+					font-size: spSize(32);
+					line-height: spSize(40);
+				}
+			}
+
+			.text {
+				margin: 16px 0 0;
+				font-size: 14px;
+				line-height: 24px;
+
+				@include sp {
+					margin: 1em 0 0;
+					font-size: spSize(28);
+					line-height: 1.5;
+				}
+			}
+
+			.arw {
+				display: grid;
+				place-items: center;
+				width: 28px;
+				aspect-ratio: 1;
+				position: absolute;
+				top: 24px;
+				right: 23px;
+				background: #E9F0F5;
+				border-radius: 50%;
+				transition: background-color .4s;
+
+				@include sp {
+					width: spSize(48);
+					top: spSize(36);
+					right: spSize(40);
+				}
+
+				svg {
+					width: calc(100% * 8 / 28);
+
+					path {
+						fill: #00549E;
+						transition: fill .4s;
+					}
+				}
+			}
+
+			&:hover {
+				.arw {
+					background: #00549E;
+
+					svg {
+						path {
+							fill: #fff;
+						}
+					}
+				}
+			}
+
+		}
+	}
+
+	// ================================================================================
+
+	.lead {
+		padding: 80px 0 110px;
+
+		@include sp {
+			margin: spSize(100) 0 0;
+			padding: 0 0 spSize(60);
+		}
+
+		.inner {
+			display: flex;
+			justify-content: space-between;
+
+			@include sp {
+				display: block;
+			}
+
+			.image {
+				width: 429px;
+
+				@include sp {
+					width: auto;
+				}
+			}
+
+			.text {
+				width: 516px;
+				font-size: 16px;
+				line-height: (30 / 16);
+
+				@include sp {
+					width: auto;
+					margin: spSize(30) 0 0;
+					font-size: spSize(28);
+					line-height: (44 / 28);
+				}
+			}
+		}
+	}
+
+	// ================================================================================
+
+	.cv {
+		margin: 88px 0 0;
+		padding: 65px 0 68px;
+		background: #E9F0F5;
+		border-radius: 16px;
+		font-size: 18px;
+		font-weight: 600;
+		line-height: (24/18);
+		text-align: center;
+
+		@include sp {
+			margin: spSize(60) 0 0;
+			padding: spSize(60) spSize(40);
+			border-radius: spSize(20);
+			font-size: spSize(28);
+		}
+
+		a {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: (1em * 10 / 18);
+			width: 312px;
+			height: 65px;
+			margin: 27px auto 0;
+			background: #00549E;
+			border-radius: 8px;
+			color: #fff;
+
+			@include sp {
+				width: auto;
+				height: spSize(120);
+				margin: spSize(40) auto 0;
+				border-radius: spSize(10);
+			}
+
+			&::before {
+				content: '';
+				display: block;
+				width: (1em * 16 / 18);
+				aspect-ratio: 16/12;
+				background: url(../../common/imgs/ico-mail.svg) 50% 50% / contain no-repeat;
+			}
+		}
+	}
+
+	// ================================================================================
+
+	.merit {
+		padding: 70px 0 110px;
+		position: relative;
+		counter-reset: sectionNo 0;
+
+		@include sp {
+			padding: spSize(60) 0 spSize(60);
+		}
+
+		section {
+			margin: 45px 0 0;
+
+			@include sp {
+				margin: spSize(75) 0 0;
+			}
+
+			.title {
+				padding: 15px 0;
+				position: relative;
+				font-size: 24px;
+				font-weight: bold;
+				line-height: 2;
+				counter-increment: sectionNo;
+
+				@include sp {
+					padding: spSize(15) 0;
+					font-size: spSize(28);
+					line-height: (48 / 28);
+				}
+
+				span {
+					position: relative;
+				}
+
+				&::before {
+					content: '0' counter(sectionNo);
+					position: absolute;
+					top: 50%;
+					color: $txtColor02;
+					font-size: 100px;
+					font-style: italic;
+					letter-spacing: .1em;
+					line-height: 1;
+					transform: translate(0, -50%);
+
+					@include sp {
+						font-size: spSize(100);
+					}
+				}
+			}
+
+			p,
+			ul,
+			dl {
+				margin: 15px 0 0;
+				font-size: 16px;
+				line-height: (26 / 16);
+
+				@include sp {
+					margin: spSize(20) 0 0;
+					font-size: spSize(28);
+					line-height: (42 / 28);
+				}
+			}
+
+			ul li,
+			dl dd {
+				padding-left: 1em;
+				text-indent: -1em;
+
+				&::before {
+					content: '・';
+				}
+			}
+
+			.inner {
+				&:first-of-type {
+					@include sp {
+						margin: spSize(45) 0 0;
+					}
+				}
+
+				&:nth-of-type(odd) {
+					.title::before {
+						left: -55px;
+
+						@include sp {
+							left: spSize(-35);
+						}
+					}
+				}
+
+				&:nth-of-type(even) {
+					.title::before {
+						right: 40px;
+
+						@include sp {
+							right: auto;
+							left: spSize(-35);
+						}
+					}
+				}
+
+			}
+
+		}
+
+		.text section:nth-of-type(even) .title::before {
+			right: auto;
+			left: -55px;
+
+			@include sp {
+				left: spSize(-35);
+			}
+		}
+
+		.inner {
+			display: flex;
+			justify-content: space-between;
+
+			@include sp {
+				display: block;
+			}
+
+			.image {
+				width: 398px;
+				padding: 27px 0 0;
+
+				@include sp {
+					width: auto;
+					margin: spSize(55) 0 0;
+					padding: 0;
+				}
+			}
+
+			.text {
+				width: 570px;
+
+				@include sp {
+					width: auto;
+				}
+			}
+
+			&:nth-of-type(even) {
+				flex-direction: row-reverse;
+			}
+		}
+
+		&.bgBlue {
+			background: $bgColor01;
+		}
+	}
+
+	// ================================================================================
+
+	.case {
+		padding: 80px 0 110px;
+		position: relative;
+		counter-reset: sectionNo;
+
+		@include sp {
+			padding: spSize(60) 0;
+		}
+
+		.sectionTitle~section {
+			margin: 85px 0 0;
+			counter-increment: sectionNo;
+
+			@include sp {
+				margin: spSize(110) 0 0;
+			}
+
+			&>.title {
+				border: 1px solid $txtColor01;
+				padding: 21px 0 21px 109px;
+				position: relative;
+				color: $txtColor01;
+				font-size: 24px;
+				font-weight: normal;
+				line-height: 1.5;
+
+				@include sp {
+					margin: 0 0 spSize(40);
+					padding: spSize(15) 0 spSize(15) spSize(110);
+					font-size: spSize(28);
+					line-height: (48 / 28);
+
+					&.hasIcon {
+						margin: 0 0 spSize(113);
+					}
+				}
+
+				&::before {
+					content: '0' counter(sectionNo);
+					width: 79px;
+					position: absolute;
+					top: 0;
+					left: 0;
+					background: $txtColor01;
+					color: #fff;
+					font-size: 30px;
+					font-weight: bold;
+					letter-spacing: .1em;
+					line-height: 78px;
+					text-align: center;
+
+					@include sp {
+						width: spSize(79);
+						font-size: spSize(30);
+						line-height: spSize(78);
+					}
+				}
+
+				.icon {
+					position: absolute;
+					top: 50%;
+					right: 24px;
+					transform: translate(0, -50%);
+
+					@include sp {
+						width: 100%;
+						top: calc(100% + #{spSize(25)});
+						right: 0;
+						transform: none;
+						text-align: right;
+					}
+
+					img {
+						margin: 0 0 0 13px;
+
+						@include sp {
+							margin: 0 0 0 spSize(13);
+						}
+					}
+
+					.icon01 {
+						@include sp {
+							width: spSize(126);
+						}
+					}
+
+					.icon02 {
+						@include sp {
+							width: spSize(135);
+						}
+					}
+
+					.icon03 {
+						@include sp {
+							width: spSize(113);
+						}
+					}
+				}
+
+				&+section {
+					margin: 65px 0 0;
+
+					@include sp {
+						margin: 0;
+					}
+				}
+			}
+
+			&>.image {
+				margin: 55px 0 0;
+
+				@include sp {
+					margin: spSize(65) 0 0;
+				}
+			}
+
+			section {
+				display: flex;
+				margin: 55px 0 0;
+				align-items: flex-start;
+
+				@include sp {
+					display: block;
+					margin: spSize(65) 0 0;
+				}
+
+				.title {
+					box-sizing: border-box;
+					width: 226px;
+					border-left: 3px solid $txtColor01;
+					padding: 12px 0 12px 24px;
+					color: $txtColor01;
+					font-size: 16px;
+					font-weight: bold;
+					line-height: 1;
+
+					@include sp {
+						width: auto;
+						border-left-width: spSize(3);
+						padding: 0 0 0 spSize(26);
+						font-size: spSize(28);
+						line-height: spSize(40);
+					}
+				}
+
+				.content {
+					width: 774px;
+
+					@include sp {
+						width: auto;
+						margin: spSize(20) 0 0;
+					}
+
+					.image {
+						width: 398px;
+						margin: 0 0 0 31px;
+						float: right;
+
+						@include sp {
+							width: spSize(580);
+							margin: spSize(40) auto;
+							float: none;
+						}
+					}
+
+					p,
+					ul {
+						font-size: 16px;
+						line-height: (26 / 16);
+						overflow: hidden;
+
+						@include sp {
+							font-size: spSize(28);
+							line-height: (42 / 28);
+						}
+					}
+				}
+			}
+		}
+
+		.sectionTitle+section {
+			margin: 50px 0 0;
+
+			@include sp {
+				margin: spSize(50) 0 0;
+			}
+		}
+
+		&.bgBlue {
+			background: $bgColor01;
+		}
+	}
+
+	// ================================================================================
+
+	.contentFtr {
+		padding: 65px 0 50px;
+		background: #313131;
+
+		@include sp {
+			padding: spSize(70) 0 spSize(90);
+		}
+
+		.menu {
+			display: flex;
+			justify-content: space-between;
+
+			@include sp {
+				display: block;
+				width: spSize(480);
+				margin: 0 auto;
+			}
+
+			li {
+				width: 312px;
+
+				@include sp {
+					width: auto;
+					margin: spSize(25) 0 0;
+				}
+
+				img {
+					max-width: 100%;
+				}
+			}
+		}
+
+		.btn {
+			display: block;
+			box-sizing: border-box;
+			width: 200px;
+			margin: 45px auto 0;
+			border: 1px solid #fff;
+			background: url("../../common/imgs/arrow01.png") calc(100% - 21px) 50% no-repeat;
+			border-radius: 25px;
+			color: #fff;
+			line-height: 48px;
+			text-align: center;
+
+			@include sp {
+				width: spSize(260);
+				margin: spSize(55) auto 0;
+				background-position: calc(100% - #{spSize(20)}) 50%;
+				background-size: spSize(18) auto;
+				border-radius: spSize(30);
+				font-size: spSize(24);
+				line-height: calc(#{spSize(60)} - 2px);
+			}
+		}
+	}
+}

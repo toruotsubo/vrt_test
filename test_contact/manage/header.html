@@ -1,0 +1,12 @@
+<form id="selForm" action="topmenu.php" method="POST">
+<ul class="topnav">
+    <li class="topnavitem">
+	</li>
+    <li class="topnavitem"></li>
+    <li class="topnavitem">
+    <form id="Logout" action="topmenu.php" method="POST">
+	<div id="logout"><input type="submit"  class="submit" name="submit" id="btn_dl" value="<?php echo BTN_LOGOUT; ?>"></div>
+	</li>
+</ul>
+<input type="hidden" name="user" value="<?php echo $_SESSION['user']; ?>">
+</form>

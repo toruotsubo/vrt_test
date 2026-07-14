@@ -1,0 +1,68 @@
+#inputfile {
+  position: relative;
+  padding: 100px 0 20px;
+  text-align: center;
+}
+#droparea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+/*  height: 100%;*/
+  padding: 20px 0 0;
+  background-color: #F5F5F5;
+  border: 2px dashed #BBB;
+  border-radius: 5px;
+}
+#droparea.dragover {
+  background-color: #FFF;
+  border: 2px solid #191970;
+}
+#uploadfile {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 60px;
+  z-index: 10;
+  opacity: 0;
+}
+#inputfile-wrap {
+  position: relative;
+  display: inline-block;
+}
+#btn-inputfile,
+#btn-changefile {
+  display: table;
+  width: 300px;
+}
+#btn-changefile {
+  display: none;
+}
+#btn-inputfile span,
+#btn-changefile span {
+  display: table-cell;
+  width: 300px;
+  height: 60px;
+  background-color: #191970;
+  border-radius: 0;
+  color: #FFF;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  z-index: 2;
+}
+#upfile-wrap.selected #btn-inputfile {
+  display: none;
+}
+#upfile-wrap.selected #btn-changefile {
+  display: table;
+}
+#prevfile {
+  margin-top: 5px;
+  font-size: 16px;
+}

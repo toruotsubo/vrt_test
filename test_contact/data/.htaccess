@@ -1,0 +1,8 @@
+# This file is made by Administration Tool.
+#
+# このファイルは管理ツールによって生成されたファイルです。
+# ファイルの内容を変更すると正しく動作しなくなったり、
+# 管理ツールで編集できなくなる可能性がありますのでご注意下さい。
+#
+AuthUserFile .htpasswd
+require valid-user

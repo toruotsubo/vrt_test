@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<!-- Google Tag Manager -->
+	<script>(function (w, d, s, l, i) {
+			w[l] = w[l] || []; w[l].push({
+				'gtm.start':
+					new Date().getTime(), event: 'gtm.js'
+			}); var f = d.getElementsByTagName(s)[0],
+				j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+					'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+		})(window, document, 'script', 'dataLayer', 'GTM-T6WS8QC');</script>
+	<!-- End Google Tag Manager -->
+	<meta charset="UTF-8">
+	<!-- title -->
+	<title>暗号化した先は信用できるの？（SSLの【認証】とは？）①│Webコンサルティング ホームページ制作 東京都　ウェブマスターズ</title>
+	<!-- meta -->
+	<meta name="keywords" content="ホームページ,制作,web,構築,コンサルティング,設計,企画,東京,作成,製作">
+	<meta name="description" content="東京都にあるホームページ制作会社ウェブマスターズのホームページ">
+	<meta name="copyright" content="株式会社ウェブマスターズ">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" id="viewport">
+	<script>
+		var viewport = document.getElementById("viewport");
+		var mql = window.matchMedia("(max-width:750px)");
+		function mediaChange(mql) {
+			viewport.setAttribute("content", "width=device-width, initial-scale=1.0");
+			if (!mql.matches) {
+				viewport.setAttribute("content", "width=1240");
+			}
+		}
+		mql.addListener(mediaChange);
+		mediaChange(mql);
+	</script>
+	<meta name="format-detection" content="telephone=no">
+	<meta name="format-detection" content="telephone=no">
+	<!-- link -->
+	<link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+	<link href="../../common/css/normalize.css" rel="stylesheet" media="all">
+	<link href="../../common/css/base.css" rel="stylesheet" media="all">
+	<link href="../../common/css/font-awesome.min.css" rel="stylesheet" media="all">
+	<link href="../../common/css/common.css" rel="stylesheet" media="all">
+	<link href="../css/unique.css" rel="stylesheet" media="all" />
+	<!-- TETORI tag www.webmasters.co.jp -->
+	<script>
+		(function (w, d, s, u) {
+			_wsq = w._wsq || (_wsq = []);
+			_wsq.push(['init', u, 413]);
+			_wsq.push(['domain', 'www.webmasters.co.jp']);
+			var a = d.createElement(s); a.async = 1; a.src = 'https://cdn.' + u + '/share/js/tracking.js';
+			var b = d.getElementsByTagName(s)[0]; b.parentNode.insertBefore(a, b);
+		})(window, document, 'script', 'tetori.link');
+	</script>
+</head>
+
+<body>
+	<!-- Google Tag Manager (noscript) -->
+	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6WS8QC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+	<!-- End Google Tag Manager (noscript) -->
+	<div id="wrap">
+		<header id="header">
+			<div class="wrap">
+				<div id="siteTitle"><a href="../../index.html"><img src="../../common/imgs/hdr-logo.png" alt="株式会社ウェブマスターズ"></a></div>
+				<nav id="gNav">
+					<ul>
+						<li class="top"><a href="../../index.html">トップページ</a></li><!--
+						-->
+						<li><a href="../../philosophy/index.html">私たちの姿勢</a></li><!--
+						-->
+						<li><a href="../../service/index.html">サービス</a></li><!--
+						-->
+						<li><a href="../../works/index.html">制作実績</a></li><!--
+						-->
+						<li><a href="../index.html">コラム</a></li><!--
+						-->
+						<li><a href="../../company/index.html">会社概要</a></li><!--
+						-->
+						<li><a href="../../contact/index.html">お問い合わせ</a></li>
+					</ul>
+				</nav><!-- /gNav -->
+				<div id="spMenu"></div>
+			</div>
+		</header><!-- /header -->
+
+		<main id="main">
+			<article>
+				<header class="pageHeader">
+					<div class="image"></div>
+					<div class="title"><span><strong>コラム</strong><span>Column</span></span></div>
+					<ul class="breadCrumb">
+						<li><a href="../../index.html">HOME</a></li>
+						<li><a href="../">コラム</a></li>
+						<li>暗号化した先は信用できるの？（SSLの【認証】とは？）①</li>
+					</ul>
+				</header>
+
+				<div class="wrap">
+					<div class="body">
+						<div class="post">
+							<div class="prepend">
+								<div class="date">2025年5月27日</div>
+								<h1 class="ttl">暗号化した先は信用できるの？（SSLの【認証】とは？）①</h1>
+								<div class="tag"><span>SSL</span></div>
+							</div>
+
+							<div class="body">
+								<p>
+									先日のコラムで、SSLの役割は通信の暗号化（盗聴や改ざんの防止）だけでなく、<br>
+									サイト運営者の信頼性を確認する【認証】も含まれている、という記事を書きました。<br>
+									（<a href="../20250326/">「SSLは暗号化だけじゃない！」</a>）<br>
+									<br>
+									個人情報やカード番号などのデータを十分な強度で暗号化して送信したとしても、<br>
+									受け取り手（サイト運営者）はそれを復号して元のデータに戻せます。<br>
+									もし、その受け取り手が悪意を持ってサイトを運営しているとしたら、、、<br>
+									怖くなりますね。
+								</p>
+
+								<figure>
+									<img src="imgs/img01.jpg" alt="">
+								</figure>
+
+								<p>
+									それを防ぐSSLの機能をもっと深めてみましょう。<br>
+									<br>
+									SSL証明書は、ひとつのサイトの場合でも、<br>
+									無料で使えるものから10万円を超えるものまで幅があります。<br>
+									これは主に【認証】にかかる手間の違いです。<br>
+									【認証】とは、サイト運営者の信頼性を保証するSSLの機能です。<br>
+									<br>
+									SSLは大雑把に分類すると、【認証】レベルに応じて3つに分けられます。
+								</p>
+								<br>
+								<hr>
+								<br>
+								<p>
+									<strong>■ドメイン認証（DV：Domain Validation）</strong><br>
+									ドメインの存在を確認します。費用は、無料から数千円です。<br>
+									<br>
+									<strong>■組織実在認証（OV：Organization Validation）</strong><br>
+									ドメインの所有者を書面レベルで確認します。費用は、数万円です。<br>
+									<br>
+									<strong>■拡張認証（EV：Extended Validation）</strong><br>
+									ドメインの所有者を実在レベルで確認します。費用は、10万円程度です。<br>
+									<br>
+								</p>
+								<hr>
+								<br>
+								<p>
+									よく誤解されるのですが、<br>
+									SSLの暗号強度については、どの認証方式でも同一です。<br>
+									異なるのは、「このサイトの運営者は信用できるのか」という、<br>
+									身元確認の機能なのです。<br>
+									<br><br>
+									次回は、この3つの【認証】をもう少し踏み込んでご説明します。<br>
+									また、サイトを運営する立場に立ってSSLを選択する際に、<br>
+									これらをどう評価し、どう選択するのか、という視点でも考えてみます。<br>
+									<br><br><br>
+									※ 「SSL」は正式には「TLS（Transport Layer Security）」と呼ばれますが、一般的な呼び名として「SSL」を使用しています。<br>
+									※ 本コラムのイラストは、本文をAIに読ませて提案させたものをベースにしています。
+								</p>
+							</div>
+
+							<div class="append">
+								<?php include '../inc/author02.inc'; ?>
+
+								<div class="relatedArticles">
+									<div class="label">関連記事</div>
+									<div class="relatedArticle">
+										<div class="name"><a href="../20250612/">暗号化した先は信用できるの？（SSLの【認証】とは？）②</a></div>
+										<div class="tag"><span>CMS</span></div>
+										<figure class="image">
+											<a href="../20250612/" class="related"><img src="../20250612/imgs/index.jpg" alt="暗号化した先は信用できるの？（SSLの【認証】とは？）②"></a>
+										</figure>
+									</div>
+									<div class="relatedArticle">
+										<div class="name"><a href="../20250326/">SSLは暗号化だけじゃない！</a></div>
+										<div class="tag"><span>CMS</span></div>
+										<figure class="image">
+											<a href="../20250326/" class="related"><img src="../20250326/imgs/index.jpg" alt="SSLは暗号化だけじゃない！"></a>
+										</figure>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<nav class="link">
+							<ul>
+								<li class="bt--column"><a href="../">コラム一覧へ戻る</a></li>
+								<li><a href="../../contact/index.html">お問い合わせ</a></li>
+							</ul>
+						</nav>
+					</div>
+
+					<div class="append">
+						<ul class="banner">
+							<li><a href="https://www-webmasters-co-jp.translate.goog/index.html?_x_tr_sl=ja&_x_tr_tl=en&_x_tr_hl=ja" class="hov bnr--translation"><img src="../../imgs/translation.png" alt="ただいまAI自動翻訳による英語ページ試運転中！"></a></li>
+							<li><a href="../../choice/" class="hov"><img src="../../imgs/choice.png" alt="失敗しない！サイト制作業者の選び方"></a></li>
+							<li>
+								<a href="../../works/" class="hov">
+									<img src="../imgs/bn-works.jpg" alt="制作実績">
+									<div class="text">制作実績</div>
+								</a>
+							</li>
+							<li>
+								<a href="../../specialty/movabletype.html" class="hov">
+									<img src="../imgs/bn-movabletype.png" alt="MovableTyep開発やります">
+									<div class="text">MovableTyep開発やります</div>
+								</a>
+							</li>
+							<li>
+								<a href="../../specialty/writing.html" class="hov">
+									<img src="../imgs/bn-writing.jpg" alt="取材・撮影・イラストやります">
+									<div class="text">取材・撮影・イラストやります</div>
+								</a>
+							</li>
+							<li>
+								<a href="../../specialty/running.html" class="hov">
+									<img src="../imgs/bn-running.jpg" alt="成功に導く運用やります">
+									<div class="text">成功に導く運用やります</div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</article>
+		</main><!-- /mainContents -->
+
+		<footer id="footer">
+			<div class="wrap">
+				<div id="fNav">
+					<ul>
+						<li><a href="../../philosophy/index.html">私たちの姿勢</a></li><!--
+						-->
+						<li><a href="../../service/index.html">サービス</a></li><!--
+						-->
+						<li><a href="../../works/index.html">制作実績</a></li><!--
+						-->
+						<li><a href="../index.html">コラム</a></li><!--
+						-->
+						<li><a href="../../company/index.html">会社概要</a></li><!--
+						-->
+						<li><a href="../../contact/index.html">お問い合わせ</a></li>
+					</ul>
+				</div>
+				<div id="copyright">COPYRIGHT&copy; 2003 Webmasters Corporation, ALL RIGHTS RESERVED.</div>
+			</div>
+		</footer><!--/footer -->
+	</div><!--/wrap -->
+
+	<!-- js -->
+	<script src="../../common/js/jquery-4.0.0.min.js"></script>
+	<script src="../../common/js/jquery-migrate-4.0.2.min.js"></script>
+	<script src="../../common/js/jquery.smooth-scroll.min.js"></script>
+	<script src="../../common/js/common.js"></script>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+</body>
+
+</html>

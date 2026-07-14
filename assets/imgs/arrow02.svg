@@ -1,0 +1,19 @@
+<svg id="arrow02.svg" xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #206b87;
+        stroke-linejoin: round;
+        stroke-width: 1px;
+      }
+
+      .cls-2 {
+        fill: #206b87;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle id="楕円形_1" data-name="楕円形 1" class="cls-1" cx="15.922" cy="15.92" r="12.578"/>
+  <path id="シェイプ_4" data-name="シェイプ 4" class="cls-2" d="M283.506,8945.55l0.017,0.02-0.033.03-3.926,4.04v3.98l4.456-4.59,1.4-1.44,0.033-.03,1.386,1.42,4.455,4.59v-3.98l-3.926-4.04-1.932-1.99Z" transform="translate(-269.5 -8932.5)"/>
+</svg>

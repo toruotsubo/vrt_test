@@ -1,0 +1,175 @@
+
+// 変数
+// #############################################################################################
+
+$pcWidth: 1200;
+$spWidth: 750;
+$spDesignWidth: 750;
+
+$colorP: #333; // primary color
+$colorA: #054196; // accent color
+$colorL: #3487c4; //llink text color
+$colorBg: #eff2f5;
+
+$baseFontFamily: sansSerif;
+$msFonts: false;
+
+$serif: "游明朝", "Yu Mincho", "游明朝体", "YuMincho", "ヒラギノ明朝 Pro W3", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "HiraMinProN-W3", "ＭＳ Ｐ明朝", "MS PMincho", serif;
+$sansSerif: "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+$sansSerifBold: "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic",  "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+$msSerif: "ＭＳ Ｐ明朝", "MS PMincho", serif;
+$msSansSerif: "メイリオ", "ＭＳ Ｐゴシック", sans-serif;
+
+$spPading: .3rem;
+
+// メディアクエリ
+// #############################################################################################
+
+@mixin pc {
+	@media screen and (min-width: #{$spWidth + 1}px) {
+		@content;
+	}
+}
+@mixin pcNarrow {
+	@media screen and (max-width: #{$pcWidth}px) and (min-width: #{$spWidth + 1}px) {
+		@content;
+	}
+}
+@mixin sp {
+	@media screen and (max-width: #{$spWidth}px) {
+		@content;
+	}
+}
+@mixin spLandscape {
+	@media screen and (max-width: #{$spWidth}px) and (orientation: landscape) {
+		@content;
+	}
+}
+@mixin ie {
+	@media screen and (-ms-high-contrast: none) {
+		@content;
+	}
+}
+
+// ユーティリティ
+// #############################################################################################
+
+%sansSerif {
+	font-family: $sansSerif;
+
+	@if $msFonts == true {
+		@include ie {
+			font-family: $msSansSerif;
+		}
+	}
+}
+%serif {
+	font-family: $serif;
+
+	@if $msFonts == true {
+		@include ie {
+			font-family: $msSerif;
+		}
+	}
+}
+%bold {
+	font-weight: bold;
+	
+	@if $baseFontFamily == sansSerif {
+		font-family: $sansSerifBold;
+
+		@if $msFonts == true {
+			@include ie {
+				font-family: $msSerif;
+			}
+		}
+	}
+}
+
+%clearfix::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+%indent {
+	padding-left: 1em;
+	text-align: left;
+	text-indent: -1em;
+}
+%textShadow_w {
+	text-shadow: 0 0 .1em #fff, 0 0 .2em #fff, 0 0 .4em #fff, 0 0 .8em #fff, 0 0 8em #fff;
+}
+%textShadow_bk {
+	text-shadow: 0 0 .1em #000, 0 0 .2em #000, 0 0 .4em #000, 0 0 .6em #000, 0 0 .8em #000;
+}
+
+
+@function spSize ($px) {
+	@return 100vw * $px / $spDesignWidth;
+}
+
+// テキスト上下詰め
+
+@mixin textCrop($line-height) {
+	line-height: $line-height;
+
+	&::before,
+	&::after {
+		content: '';
+		display: block;
+		height: 0;
+		width: 0;
+	}
+	&::before {
+		margin-bottom: #{((1 - $line-height) / 2)}em;
+	}
+	&::after {
+		margin-top: #{((1 - $line-height) / 2)}em;
+	}
+}
+
+// > 印
+
+@mixin arrow ($width, $lineWidth, $color) {
+	box-sizing: border-box;
+	width: $width / 0.70711;
+	height: $width / 0.70711;
+	border: $lineWidth solid transparent;
+	border-top-color: $color;
+	border-right-color: $color;
+	transform: rotate(45deg);
+	transform-origin: top right;
+}
+
+// 三角形
+
+@mixin triangleUp ($width, $height, $color) {
+	display: block;
+	width: 0;
+	height: 0;
+	border: 0 solid transparent;
+	border-right-width: $width / 2;
+	border-bottom-width: $height;
+	border-bottom-color: $color;
+	border-left-width: $width / 2;
+}
+@mixin triangleRight ($width, $height, $color) {
+	display: block;
+	width: 0;
+	height: 0;
+	border: 0 solid transparent;
+	border-top-width: $height / 2;
+	border-bottom-width: $height / 2;
+	border-left-width: $width;
+	border-left-color: $color;
+}
+@mixin triangleDown ($width, $height, $color) {
+	display: block;
+	width: 0;
+	height: 0;
+	border: 0 solid transparent;
+	border-right-width: $width / 2;
+	border-top-width: $height;
+	border-top-color: $color;
+	border-left-width: $width / 2;
+}

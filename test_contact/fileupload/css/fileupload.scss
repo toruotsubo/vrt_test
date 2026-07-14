@@ -1,0 +1,107 @@
+// 変数定義
+// #############################################################################################
+@use 'settings'as *;
+@use 'reset';
+
+// main
+// #############################################################################################
+.dropArea {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 180px;
+	border: 2px dashed #bbb;
+	position: relative;
+	border-radius: 5px;
+	background: #f5f5f5;
+	text-align: center;
+
+	&.enter {
+		box-shadow: inset 0 0 0 1px orange;
+	}
+
+	label {
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		input {
+			display: none;
+		}
+	}
+}
+
+.files {
+	display: none;
+
+	&.hasFiles {
+		display: block;
+	}
+
+	.fileList {
+		margin: 2em 0 0;
+
+		li {
+			margin: 1em 0 0;
+			line-height: 2;
+		}
+
+		.fileIcon {
+			width: auto;
+			height: 2em;
+		}
+
+		.btnClose {
+			width: auto;
+			height: 1em;
+			vertical-align: top;
+			cursor: pointer;
+		}
+	}
+
+	.filesize {
+		margin: 2em 0 0;
+		line-height: 1;
+		text-align: center;
+
+		.warningMessage {
+			display: none;
+		}
+
+		&.warning {
+			.warningMessage {
+				display: inline;
+				color: red;
+			}
+		}
+	}
+}
+
+#form button[type=button].btnDeleteAll {
+	width: 7em;
+	margin: 1em auto 0;
+	background: transparent url(../imgs/ico-close.png) 0 50% / 1em auto no-repeat;
+	color: inherit;
+	font-family: inherit;
+	line-height: 2;
+}
+
+input[type="submit"] {
+	display: block;
+	width: 8em;
+	border: none;
+	padding: 0;
+	margin: 2em auto 0;
+	background: $colorP;
+	border-radius: 1.5em;
+	color: #fff;
+	line-height: 3;
+
+	&.disabled {
+		pointer-events: none;
+		cursor: not-allowed !important;
+	}
+}
