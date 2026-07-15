@@ -2,20 +2,6 @@
 export const DEV_BASE = 'https://conf:u3znt1qp@conf.webmasters.co.jp/wms-vrt_test/';
 export const PROD_BASE = 'https://www.webmasters.co.jp';
 
-// 比較対象ページ
-export const pages = [
-	'/',
-	'/philosophy/',
-	'/service/',
-	'/works/',
-	'/column/',
-	'/company/',
-	'/specialty/movabletype.html',
-	'/specialty/writing.html',
-	'/specialty/running.html',
-	'/choice/',
-];
-
 // レスポンシブ設定
 export const devices = [
 	{
@@ -28,21 +14,53 @@ export const devices = [
 	}
 ];
 
-// 特定ページ・デバイスで実行する操作
-// 追加したい操作があれば、type を増やすだけで対応できます。
-export const interactionConfigs = [
+export interface Action {
+	type: 'click' | 'hover' | 'wait';
+	selector?: string;
+	ms?: number;
+	waitMs?: number;
+}
+
+export interface Interaction {
+	deviceName: string;
+	actions: Action[];
+}
+
+export interface PageConfig {
+	path: string;
+	interactions?: Interaction[];
+}
+
+// 比較対象ページと操作の設定
+export const pages: PageConfig[] = [
 	{
-		pagePath: '/',
-		deviceName: 'sp',
-		actions: [
-			{ type: 'click', selector: '#spMenu', waitMs: 500 }
+		path: '/',
+		interactions: [
+			{
+				deviceName: 'sp',
+				actions: [
+					{ type: 'click', selector: '#spMenu', waitMs: 500 }
+				]
+			}
 		]
 	},
+	{ path: '/philosophy/' },
+	{ path: '/service/' },
+	{ path: '/works/' },
+	{ path: '/column/' },
+	{ path: '/company/' },
+	{ path: '/specialty/movabletype.html' },
+	{ path: '/specialty/writing.html' },
+	{ path: '/specialty/running.html' },
 	{
-		pagePath: '/choice/',
-		deviceName: 'pc',
-		actions: [
-			{ type: 'click', selector: '.mainSection .btn', waitMs: 500 }
+		path: '/choice/',
+		interactions: [
+			{
+				deviceName: 'pc',
+				actions: [
+					{ type: 'click', selector: '.mainSection .btn', waitMs: 500 }
+				]
+			}
 		]
-	},
+	}
 ];
