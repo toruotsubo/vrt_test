@@ -1,5 +1,0 @@
-船舶海洋工学会　海の不思議箱の下層ページでの「質問コーナー」へのリンク先が
-https://www.webmasters.co.jp/mecc/fushigi/
-となっているので、
-以下問い合わせフォームへ転送するよう/mecc/fushigi/.htaccessで指定しています。
-https://www.jasnaoe.or.jp/inquiry/index.html?to=0079
