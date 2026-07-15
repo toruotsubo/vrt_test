@@ -10,6 +10,12 @@ const { PNG } = require('pngjs');
 const screenshotPath = (name: string) =>
 	path.join(process.cwd(), 'screenshots', name);
 
+const toSelectorName = (selector: string) =>
+	selector
+		.replace(/[^a-zA-Z0-9]+/g, '_')
+		.replace(/^_+|_+$/g, '')
+		.replace(/_+/g, '_');
+
 const ensureScreenshotDir = (filePath: string) => {
 	fs.mkdirSync(path.dirname(filePath), { recursive: true });
 };
@@ -56,7 +62,7 @@ const runConfiguredInteractions = async (page: any, pagePath: string, deviceName
 test.describe('VRT: multiple pages + devices', () => {
 	for (const pagePath of pages) {
 		for (const device of devices) {
-			test(`compare ${pagePath} on ${device.name}`, async ({ page }) => {
+			test(`compare ${pagePath} on ${device.name}`, async ({ page }, testInfo) => {
 				test.setTimeout(120000);
 
 				const devUrl = `${DEV_BASE}${pagePath}`;
@@ -89,7 +95,10 @@ test.describe('VRT: multiple pages + devices', () => {
 				const devInteractions = interactionConfigs.filter((config) => config.pagePath === pagePath && config.deviceName === device.name);
 				if (devInteractions.length > 0) {
 					await runConfiguredInteractions(page, pagePath, device.name);
-					menuDevScreenshotPath = screenshotPath(`${safeName}_${device.name}_menu_dev.png`);
+					const selectorName = toSelectorName(
+						(devInteractions[0].actions.find((action: { selector?: string }) => action.selector)?.selector ?? '')
+					);
+					menuDevScreenshotPath = screenshotPath(`${safeName}_${device.name}_${selectorName || 'interaction'}_dev.png`);
 					ensureScreenshotDir(menuDevScreenshotPath);
 					await page.screenshot({
 						path: menuDevScreenshotPath,
@@ -121,7 +130,10 @@ test.describe('VRT: multiple pages + devices', () => {
 				const prodInteractions = interactionConfigs.filter((config) => config.pagePath === pagePath && config.deviceName === device.name);
 				if (prodInteractions.length > 0) {
 					await runConfiguredInteractions(page, pagePath, device.name);
-					menuProdScreenshotPath = screenshotPath(`${safeName}_${device.name}_menu_prod.png`);
+					const selectorName = toSelectorName(
+						(prodInteractions[0].actions.find((action: { selector?: string }) => action.selector)?.selector ?? '')
+					);
+					menuProdScreenshotPath = screenshotPath(`${safeName}_${device.name}_${selectorName || 'interaction'}_prod.png`);
 					ensureScreenshotDir(menuProdScreenshotPath);
 					await page.screenshot({
 						path: menuProdScreenshotPath,
@@ -157,6 +169,16 @@ test.describe('VRT: multiple pages + devices', () => {
 					diffFilePath,
 					PNG.sync.write(diff)
 				);
+				const base64 = diff.toString('base64');
+				const relativeDiffFilePath = path.relative(process.cwd(), diffFilePath);
+				await testInfo.attach(`${safeName}_${device.name}_diff.png`, {
+					path: relativeDiffFilePath,
+					contentType: 'image/png'
+				});
+				//await testInfo.attach('error-context', {
+				//	body: `## Visual Diff\n\n![diff](data:image/png;base64,${base64})`,
+				//	contentType: 'text/markdown'
+				//});
 
 				expect(mismatch, `差分ピクセル数: ${mismatch}`).toBe(0);
 
@@ -180,12 +202,17 @@ test.describe('VRT: multiple pages + devices', () => {
 						{ threshold: 0.1 }
 					);
 
-					const menuDiffFilePath = screenshotPath(`${safeName}_${device.name}_menu_diff.png`);
+					const menuDiffFilePath = screenshotPath(`${safeName}_${device.name}_${toSelectorName((devInteractions[0].actions.find((action: { selector?: string }) => action.selector)?.selector ?? '')) || 'interaction'}_diff.png`);
 					ensureScreenshotDir(menuDiffFilePath);
 					fs.writeFileSync(
 						menuDiffFilePath,
 						PNG.sync.write(diff)
 					);
+					const relativeMenuDiffFilePath = path.relative(process.cwd(), menuDiffFilePath);
+					await testInfo.attach(`${safeName}_${device.name}_${toSelectorName((devInteractions[0].actions.find((action: { selector?: string }) => action.selector)?.selector ?? '')) || 'interaction'}_diff.png`, {
+						path: relativeMenuDiffFilePath,
+						contentType: 'image/png'
+					});
 
 					expect(mismatch, `差分ピクセル数: ${mismatch}`).toBe(0);
 				}

@@ -1,5 +1,5 @@
 // サーバー設定
-export const DEV_BASE = 'https://conf:u3znt1qp@conf.webmasters.co.jp/wms/';
+export const DEV_BASE = 'https://conf:u3znt1qp@conf.webmasters.co.jp/wms-vrt_test/';
 export const PROD_BASE = 'https://www.webmasters.co.jp';
 
 // 比較対象ページ
