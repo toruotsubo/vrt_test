@@ -118,16 +118,12 @@ const compareImages = async (
 	img2Path: string,
 	diffPath: string,
 	testInfo: any,
-	attachmentName: string,
-	devLabel: string = 'dev',
-	prodLabel: string = 'prod'
 ) => {
 	const img1 = PNG.sync.read(fs.readFileSync(img1Path));
 	const img2 = PNG.sync.read(fs.readFileSync(img2Path));
 
 	const { width, height } = img1;
 	const diff = new PNG({ width, height });
-
 	const mismatch = pixelmatch(
 		img1.data,
 		img2.data,
@@ -139,25 +135,17 @@ const compareImages = async (
 
 	if (mismatch > 0) {
 		ensureScreenshotDir(diffPath);
-		fs.writeFileSync(diffPath, PNG.sync.write(diff));
-		await testInfo.attach(attachmentName, {
+		const diffBuffer = PNG.sync.write(diff);
+		fs.writeFileSync(diffPath, diffBuffer);
+		await testInfo.attach('Screenshot', {
 			path: diffPath,
 			contentType: 'image/png'
 		});
-		await testInfo.attach(devLabel, {
-			path: img1Path,
-			contentType: 'image/png'
-		});
-		await testInfo.attach(prodLabel, {
-			path: img2Path,
-			contentType: 'image/png'
-		});
 	}
-
 	expect(mismatch, `差分ピクセル数: ${mismatch}`).toBe(0);
 };
 
-test.describe('VRT: multiple pages + devices', () => {
+test.describe('VRT: 本番・開発表示差分検査', () => {
 	for (const pageConfig of pages) {
 		for (const device of devices) {
 			test(`compare ${pageConfig.path} on ${device.name}`, async ({ page }, testInfo) => {
@@ -178,9 +166,6 @@ test.describe('VRT: multiple pages + devices', () => {
 					prodResult.normalPath,
 					diffFilePath,
 					testInfo,
-					`${safeName}_${device.name}_diff.png`,
-					`${safeName}_${device.name}_dev.png`,
-					`${safeName}_${device.name}_prod.png`
 				);
 
 				// 4. Compare interaction screenshots if present
@@ -192,9 +177,6 @@ test.describe('VRT: multiple pages + devices', () => {
 						prodResult.interactionPath,
 						interactionDiffFilePath,
 						testInfo,
-						`${safeName}_${device.name}_${label}_diff.png`,
-						`${safeName}_${device.name}_${label}_dev.png`,
-						`${safeName}_${device.name}_${label}_prod.png`
 					);
 				}
 			});
