@@ -61,6 +61,11 @@ interface ScreenshotResult {
 	interactionLabel?: string;
 }
 
+interface PairResult {
+	dev: ScreenshotResult;
+	prod: ScreenshotResult;
+}
+
 const captureSite = async (
 	page: any,
 	baseUrl: string,
@@ -145,40 +150,63 @@ const compareImages = async (
 	expect(mismatch, `差分ピクセル数: ${mismatch}`).toBe(0);
 };
 
+const hasInteractionForDevice = (pageConfig: PageConfig, deviceName: string) =>
+	Boolean(pageConfig.interactions?.some(i => i.deviceName === deviceName && i.actions.length > 0));
+
+const captureDevAndProd = async (
+	page: any,
+	pageConfig: PageConfig,
+	device: any,
+): Promise<PairResult> => {
+	const dev = await captureSite(page, DEV_BASE, pageConfig, device, 'dev');
+	const prod = await captureSite(page, PROD_BASE, pageConfig, device, 'prod');
+	return { dev, prod };
+};
+
 test.describe('VRT: 本番・開発表示差分検査', () => {
 	for (const pageConfig of pages) {
 		for (const device of devices) {
-			test(`compare ${pageConfig.path} on ${device.name}`, async ({ page }, testInfo) => {
+			test(`${device.name} 通常時 ${pageConfig.path}`, async ({ page }, testInfo) => {
 				test.setTimeout(120000);
 
 				const safeName = pageConfig.path.replace(/\//g, '_');
-
-				// 1. Capture Dev site
-				const devResult = await captureSite(page, DEV_BASE, pageConfig, device, 'dev');
-
-				// 2. Capture Prod site
-				const prodResult = await captureSite(page, PROD_BASE, pageConfig, device, 'prod');
-
-				// 3. Compare normal screenshots
+				const { dev, prod } = await captureDevAndProd(page, pageConfig, device);
 				const diffFilePath = screenshotPath(`${safeName}_${device.name}_diff.png`);
 				await compareImages(
-					devResult.normalPath,
-					prodResult.normalPath,
+					dev.normalPath,
+					prod.normalPath,
 					diffFilePath,
 					testInfo,
 				);
+			});
 
-				// 4. Compare interaction screenshots if present
-				if (devResult.interactionPath && prodResult.interactionPath) {
-					const label = devResult.interactionLabel || 'interaction';
-					const interactionDiffFilePath = screenshotPath(`${safeName}_${device.name}_${label}_diff.png`);
-					await compareImages(
-						devResult.interactionPath,
-						prodResult.interactionPath,
-						interactionDiffFilePath,
-						testInfo,
-					);
-				}
+			const hasInteraction = hasInteractionForDevice(pageConfig, device.name);
+			test(`${device.name} UI操作時 ${pageConfig.path}`, async ({ page }, testInfo) => {
+				test.skip(!hasInteraction, 'このページ・デバイスにはUI操作設定がありません');
+				test.setTimeout(120000);
+
+				const safeName = pageConfig.path.replace(/\//g, '_');
+				const { dev, prod } = await captureDevAndProd(page, pageConfig, device);
+				const label = dev.interactionLabel || prod.interactionLabel || 'interaction';
+				const devInteractionPath = dev.interactionPath || screenshotPath(`${safeName}_${device.name}_${label}_dev.png`);
+				const prodInteractionPath = prod.interactionPath || screenshotPath(`${safeName}_${device.name}_${label}_prod.png`);
+
+				/*expect(
+					fs.existsSync(devInteractionPath),
+					`開発環境のUI操作画像が見つかりません: ${devInteractionPath}`
+				).toBe(true);
+				expect(
+					fs.existsSync(prodInteractionPath),
+					`本番環境のUI操作画像が見つかりません: ${prodInteractionPath}`
+				).toBe(true);*/
+
+				const interactionDiffFilePath = screenshotPath(`${safeName}_${device.name}_${label}_diff.png`);
+				await compareImages(
+					devInteractionPath,
+					prodInteractionPath,
+					interactionDiffFilePath,
+					testInfo,
+				);
 			});
 		}
 	}
